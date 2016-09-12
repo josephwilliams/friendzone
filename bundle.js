@@ -39162,7 +39162,7 @@
 	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this, props));
 	
 	    _this.state = {
-	      potentialPlayers: ["Karl"],
+	      potentialPlayers: [],
 	      currentPlayers: [],
 	      currentPlayerIDs: [],
 	      winner: undefined

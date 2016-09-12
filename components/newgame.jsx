@@ -10,7 +10,7 @@ export default class NewGame extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      potentialPlayers: ["Karl"],
+      potentialPlayers: [],
       currentPlayers: [],
       currentPlayerIDs: [],
       winner: undefined
