@@ -21499,26 +21499,59 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	//Firebase
+	var firebase = __webpack_require__(177);
+	__webpack_require__(179);
+	__webpack_require__(181);
+	
 	var Splash = function (_React$Component) {
 	  _inherits(Splash, _React$Component);
 	
 	  function Splash() {
 	    _classCallCheck(this, Splash);
 	
-	    return _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this));
+	
+	    _this.state = {
+	      currentUser: undefined
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Splash, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      firebase.auth().onAuthStateChanged(function (user) {
+	        if (user) {
+	          that.setState({ currentUser: user });
+	        } else {
+	          console.log("No user signed in");
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'splash-container' },
-	        _react2.default.createElement(_header2.default, null),
-	        _react2.default.createElement(_auth2.default, null),
-	        _react2.default.createElement(_newgame2.default, null),
-	        _react2.default.createElement(_results2.default, null)
-	      );
+	      if (this.state.currentUser) {
+	        var username = this.state.currentUser.displayName.split(' ')[0];
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'splash-container' },
+	          _react2.default.createElement(_header2.default, null),
+	          _react2.default.createElement(_auth2.default, null),
+	          _react2.default.createElement(_newgame2.default, { currentUser: username }),
+	          _react2.default.createElement(_results2.default, { currentUser: this.state.currentUser })
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'splash-container' },
+	          _react2.default.createElement(_header2.default, null),
+	          _react2.default.createElement(_auth2.default, null),
+	          _react2.default.createElement(_results2.default, null)
+	        );
+	      }
 	    }
 	  }]);
 	
@@ -22218,10 +22251,20 @@
 	  function NewGame() {
 	    _classCallCheck(this, NewGame);
 	
-	    return _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this));
+	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this));
+	
+	    _this.state = {
+	      potentialPlayers: [],
+	      currentPlayers: [],
+	      winner: undefined
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(NewGame, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {}
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -22281,7 +22324,7 @@
 	    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this));
 	
 	    _this.state = {
-	      currentUser: null
+	      currentUser: undefined
 	    };
 	    return _this;
 	  }
@@ -22294,19 +22337,20 @@
 	        if (user) {
 	          that.setState({ currentUser: user });
 	        } else {
-	          console.log("no user signed in");
+	          console.log("No user signed in");
 	        }
 	      });
 	    }
 	  }, {
 	    key: 'initiateSignIn',
 	    value: function initiateSignIn() {
+	      var that = this;
 	      firebase.auth().signInWithPopup(provider).then(function (result) {
 	        // This gives you a Google Access Token. You can use it to access the Google API.
 	        var token = result.credential.accessToken;
 	        // The signed-in user info.
 	        var user = result.user;
-	        // ...
+	        that.setState({ currentUser: user });
 	      }).catch(function (error) {
 	        // Handle Errors here.
 	        var errorCode = error.code;
@@ -22315,7 +22359,7 @@
 	        var email = error.email;
 	        // The firebase.auth.AuthCredential type that was used.
 	        var credential = error.credential;
-	        // ...
+	        console.log("sign in error", error);
 	      });
 	    }
 	  }, {
@@ -22329,29 +22373,32 @@
 	  }, {
 	    key: 'signOutUser',
 	    value: function signOutUser() {
+	      var that = this;
 	      firebase.auth().signOut().then(function () {
-	        // Sign-out successful.
-	      }, function (error) {
-	        // An error happened.
-	      });
+	        that.setState({ currentUser: undefined });
+	      }, function (error) {});
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 	
-	      if (this.state.currentUser !== null) {
-	        return _react2.default.createElement(_userprofile2.default, {
-	          user: this.state.currentUser,
-	          signOutUser: this.signOutUser.bind(this)
-	        });
+	      if (this.state.currentUser !== undefined) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_userprofile2.default, {
+	            user: this.state.currentUser,
+	            signOutUser: this.signOutUser.bind(this)
+	          })
+	        );
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'profile-container' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'sign-in-button',
+	            { className: 'auth-button',
 	              onClick: function onClick() {
 	                return _this2.initiateSignIn();
 	              } },
@@ -22371,7 +22418,7 @@
 /* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22384,10 +22431,24 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var UserProfile = function UserProfile(props) {
+	  console.log('current user props', props);
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "profile-container" },
-	    "user!"
+	    'div',
+	    { className: 'profile-container' },
+	    _react2.default.createElement('img', { src: props.user.photoURL }),
+	    _react2.default.createElement(
+	      'h3',
+	      null,
+	      props.user.displayName.split(' ')[0]
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'sign-out-button',
+	        onClick: function onClick() {
+	          return props.signOutUser();
+	        } },
+	      'sign out'
+	    )
 	  );
 	};
 	

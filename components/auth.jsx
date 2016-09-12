@@ -12,7 +12,7 @@ export default class Profile extends React.Component {
   constructor () {
     super();
     this.state = {
-      currentUser: null
+      currentUser: undefined
     };
   }
 
@@ -22,18 +22,19 @@ export default class Profile extends React.Component {
       if (user) {
         that.setState({ currentUser: user });
       } else {
-        console.log("no user signed in");
+        console.log("No user signed in");
       }
     });
   }
 
   initiateSignIn () {
+    let that = this;
     firebase.auth().signInWithPopup(provider).then(function(result) {
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      // ...
+      that.setState({ currentUser: user });
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -42,7 +43,7 @@ export default class Profile extends React.Component {
       var email = error.email;
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
-      // ...
+      console.log("sign in error", error);
     });
   }
 
@@ -54,25 +55,27 @@ export default class Profile extends React.Component {
   }
 
   signOutUser () {
+    let that = this;
     firebase.auth().signOut().then(function() {
-      // Sign-out successful.
+      that.setState({ currentUser: undefined });
     }, function(error) {
-      // An error happened.
     });
   }
 
   render () {
-    if (this.state.currentUser !== null) {
+    if (this.state.currentUser !== undefined) {
       return (
-        <UserProfile
-          user={this.state.currentUser}
-          signOutUser={this.signOutUser.bind(this)}
-        />
+        <div>
+          <UserProfile
+            user={this.state.currentUser}
+            signOutUser={this.signOutUser.bind(this)}
+            />
+        </div>
       );
     } else {
       return (
         <div className="profile-container">
-          <div className="sign-in-button"
+          <div className="auth-button"
                onClick={() => this.initiateSignIn()}>
             sign in with google
           </div>

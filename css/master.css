@@ -1,10 +1,10 @@
 body {
   margin: 0 auto;
-  font-family: 'Comfortaa', cursive;
+  /*font-family: 'Comfortaa', cursive;*/
+  font-family: 'Gudea', sans-serif;
 }
 
 .splash-container {
-
 }
 
 .header {
@@ -13,7 +13,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #ff7e7e;
-  height: 170px;
+  height: 130px;
 }
 
 .big-circle {
@@ -47,13 +47,21 @@ body {
 
 .profile-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 120px;
+  padding: 30px;
   background: #e2fff7;
+  min-height: 120px;
 }
 
-.sign-in-button {
+.profile-container img {
+  height: 100px;
+  width: 100px;
+  border-radius: 40px;
+}
+
+.auth-button {
   border-radius: 10px;
   border: 2px solid #bdbdff;
   color: #6161a8;
@@ -63,9 +71,24 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-.sign-in-button:hover {
+.auth-button:hover {
   transition: all 0.3s ease-in-out;
-  border: 2px solid #7d7da8;
+  border: 2px solid #60d9ff;
+}
+
+.sign-out-button {
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  color: #6161a8;
+  padding: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease-in-out;
+}
+
+.sign-out-button:hover {
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #60d9ff;
 }
 
 .new-game-container {
