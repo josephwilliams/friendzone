@@ -1,4 +1,9 @@
 import React from 'react';
+import Header from './header';
+import Auth from './auth';
+import NewGame from './newgame';
+import Results from './results';
+import Footer from './footer';
 
 export default class Splash extends React.Component {
   constructor () {
@@ -8,7 +13,10 @@ export default class Splash extends React.Component {
   render () {
     return (
     <div className="splash-container">
-      hello
+      <Header />
+      <Auth />
+      <NewGame />
+      <Results />
     </div>
     );
   }

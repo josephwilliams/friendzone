@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Splash from './components/splash.jsx';
 
 //Firebase
-import firebase from 'firebase/app';
+var firebase = require('firebase/app');
 require('firebase/auth');
 require('firebase/database');
 
@@ -15,7 +15,7 @@ const config = {
   apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
   authDomain: "friendzone-a9494.firebaseapp.com",
   databaseURL: "https://friendzone-a9494.firebaseio.com",
-  storageBucket: "friendzone-a9494.appspot.com",
+  storageBucket: "friendzone-a9494.appspot.com"
 };
 
 firebase.initializeApp(config);
