@@ -7,11 +7,12 @@ export default class Result extends React.Component {
 
   displayPlayers () {
     return this.props.game.players.map((player, id) => {
+      if (player !== this.props.game.winner) {
         return (
           <div className="player-result" key={id}>
             {player}
           </div>
-        )
+        )}
       }
     )
   }
