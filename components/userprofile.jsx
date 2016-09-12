@@ -1,7 +1,6 @@
 import React from 'react';
 
 const UserProfile = ( props ) => {
-  console.log('current user props', props);
   return (
     <div className="profile-container">
       <img src={props.user.photoURL}></img>

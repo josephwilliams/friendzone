@@ -1,5 +1,6 @@
 import React from 'react';
 import UserProfile from './userprofile';
+import _ from 'lodash';
 
 //Firebase
 var firebase = require('firebase/app');
@@ -22,10 +23,18 @@ export default class Profile extends React.Component {
       if (user) {
         that.setState({ currentUser: user });
       } else {
-        console.log("No user signed in");
+        // no user signed in
       }
     });
   }
+
+  addUserToDB (user) {
+    firebase.database().ref('users/' + user.uid).set({
+      username: user.displayName,
+      id: user.uid
+    });
+  }
+
 
   initiateSignIn () {
     let that = this;
@@ -34,7 +43,10 @@ export default class Profile extends React.Component {
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
+
+      that.addUserToDB(user);
       that.setState({ currentUser: user });
+
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
