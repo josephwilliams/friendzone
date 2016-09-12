@@ -21527,7 +21527,7 @@
 	        if (user) {
 	          that.setState({ currentUser: user });
 	        } else {
-	          // no user signed in
+	          that.setState({ currentUser: undefined });
 	        }
 	      });
 	
@@ -39162,7 +39162,7 @@
 	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this, props));
 	
 	    _this.state = {
-	      potentialPlayers: [],
+	      potentialPlayers: ["Karl"],
 	      currentPlayers: [],
 	      currentPlayerIDs: [],
 	      winner: undefined
@@ -39288,6 +39288,8 @@
 	
 	      firebase.database().ref().update(updates);
 	      this.setState({ currentPlayers: [], winner: undefined });
+	      // resets (forces) currentUser into this.state.currentPlayers
+	      this.handleCurrentUser(this.props.currentUser);
 	      this.props.forceUpdate();
 	    }
 	  }, {

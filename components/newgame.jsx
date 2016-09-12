@@ -10,7 +10,7 @@ export default class NewGame extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      potentialPlayers: [],
+      potentialPlayers: ["Karl"],
       currentPlayers: [],
       currentPlayerIDs: [],
       winner: undefined
@@ -122,6 +122,8 @@ export default class NewGame extends React.Component {
 
     firebase.database().ref().update(updates);
     this.setState({ currentPlayers: [], winner: undefined });
+    // resets (forces) currentUser into this.state.currentPlayers
+    this.handleCurrentUser(this.props.currentUser);
     this.props.forceUpdate();
   }
 

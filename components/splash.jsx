@@ -25,7 +25,7 @@ export default class Splash extends React.Component {
       if (user) {
         that.setState({ currentUser: user });
       } else {
-        // no user signed in
+        that.setState({ currentUser: undefined });
       }
     });
 
