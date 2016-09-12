@@ -7,10 +7,10 @@ require('firebase/auth');
 require('firebase/database');
 
 export default class NewGame extends React.Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      potentialPlayers: ["karl"],
+      potentialPlayers: [],
       currentPlayers: [],
       currentPlayerIDs: [],
       winner: undefined
@@ -26,48 +26,61 @@ export default class NewGame extends React.Component {
         let players = that.state.potentialPlayers;
         players.push(name);
         that.setState({ potentialPlayers: players });
+        that.handleCurrentUser(name);
       });
     });
   }
 
-  showPotentialPlayers () {
-    if (this.state.potentialPlayers.length > 0) {
-      return this.state.potentialPlayers.map((player, playerId) => {
-        if (this.state.winner === player) {
-          return (
-            <div className="user-selector-winner"
-              data-tag={player}
-              onClick={this.handleClick.bind(this)}
-              key={playerId}>
-              {player}
-            </div>
-          );
-        } else if (_.includes(this.state.currentPlayers, player)) {
-          return (
-            <div className="user-selector-active"
-              data-tag={player}
-              onClick={this.handleClick.bind(this)}
-              key={playerId}>
-              {player}
-            </div>
-          );
-        } else {
-          return (
-            <div className="user-selector"
-              data-tag={player}
-              onClick={this.handleClick.bind(this)}
-              key={playerId}>
-              {player}
-            </div>
-          );
-        }
-      });
+  handleCurrentUser (name) {
+    if (this.props.currentUser === name) {
+      let currentPlayers = this.state.currentPlayers;
+      currentPlayers.push(name);
+      this.setState({ currentPlayers: currentPlayers });
     }
+  }
+
+  showPotentialPlayers () {
+    return this.state.potentialPlayers.map((player, playerId) => {
+      if (this.state.winner === player) {
+        return (
+          <div className="user-selector-winner"
+            data-tag={player}
+            onClick={this.handleClick.bind(this)}
+            key={playerId}>
+            {player}
+          </div>
+        );
+      } else if (_.includes(this.state.currentPlayers, player)) {
+        return (
+          <div className="user-selector-active"
+            data-tag={player}
+            onClick={this.handleClick.bind(this)}
+            key={playerId}>
+            {player}
+          </div>
+        );
+      } else {
+        return (
+          <div className="user-selector"
+            data-tag={player}
+            onClick={this.handleClick.bind(this)}
+            key={playerId}>
+            {player}
+          </div>
+        );
+      }
+    });
   }
 
   handleClick (event) {
     let player = event.target.dataset.tag;
-    if (this.state.winner === player) {
+    if (player === this.props.currentUser) {
+      if (player === this.state.winner) {
+        this.setState({ winner: undefined });
+      } else {
+        this.setState({ winner: player });
+      }
+    } else if (this.state.winner === player) {
       let players = this.state.currentPlayers;
       let idx = players.indexOf(player);
       players.splice(idx, 1);

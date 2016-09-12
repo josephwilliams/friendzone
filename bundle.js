@@ -21487,7 +21487,7 @@
 	
 	var _results2 = _interopRequireDefault(_results);
 	
-	var _footer = __webpack_require__(187);
+	var _footer = __webpack_require__(191);
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
@@ -21527,7 +21527,7 @@
 	        if (user) {
 	          that.setState({ currentUser: user });
 	        } else {
-	          console.log("No user signed in");
+	          // no user signed in
 	        }
 	      });
 	
@@ -21577,7 +21577,7 @@
 	          { className: 'splash-container' },
 	          _react2.default.createElement(_header2.default, null),
 	          _react2.default.createElement(_auth2.default, null),
-	          _react2.default.createElement(_results2.default, null)
+	          _react2.default.createElement(_results2.default, { games: this.state.games })
 	        );
 	      }
 	    }
@@ -39156,13 +39156,13 @@
 	var NewGame = function (_React$Component) {
 	  _inherits(NewGame, _React$Component);
 	
-	  function NewGame() {
+	  function NewGame(props) {
 	    _classCallCheck(this, NewGame);
 	
-	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this));
+	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this, props));
 	
 	    _this.state = {
-	      potentialPlayers: ["karl"],
+	      potentialPlayers: [],
 	      currentPlayers: [],
 	      currentPlayerIDs: [],
 	      winner: undefined
@@ -39181,52 +39181,66 @@
 	          var players = that.state.potentialPlayers;
 	          players.push(name);
 	          that.setState({ potentialPlayers: players });
+	          that.handleCurrentUser(name);
 	        });
 	      });
+	    }
+	  }, {
+	    key: 'handleCurrentUser',
+	    value: function handleCurrentUser(name) {
+	      if (this.props.currentUser === name) {
+	        var currentPlayers = this.state.currentPlayers;
+	        currentPlayers.push(name);
+	        this.setState({ currentPlayers: currentPlayers });
+	      }
 	    }
 	  }, {
 	    key: 'showPotentialPlayers',
 	    value: function showPotentialPlayers() {
 	      var _this2 = this;
 	
-	      if (this.state.potentialPlayers.length > 0) {
-	        return this.state.potentialPlayers.map(function (player, playerId) {
-	          if (_this2.state.winner === player) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector-winner',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          } else if (_lodash2.default.includes(_this2.state.currentPlayers, player)) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector-active',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          } else {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          }
-	        });
-	      }
+	      return this.state.potentialPlayers.map(function (player, playerId) {
+	        if (_this2.state.winner === player) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector-winner',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        } else if (_lodash2.default.includes(_this2.state.currentPlayers, player)) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector-active',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(event) {
 	      var player = event.target.dataset.tag;
-	      if (this.state.winner === player) {
+	      if (player === this.props.currentUser) {
+	        if (player === this.state.winner) {
+	          this.setState({ winner: undefined });
+	        } else {
+	          this.setState({ winner: player });
+	        }
+	      } else if (this.state.winner === player) {
 	        var players = this.state.currentPlayers;
 	        var idx = players.indexOf(player);
 	        players.splice(idx, 1);
@@ -39350,7 +39364,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Rebase = __webpack_require__(188);
+	var Rebase = __webpack_require__(187);
 	var base = Rebase.createClass({
 	  apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
 	  authDomain: "friendzone-a9494.firebaseapp.com",
@@ -39488,39 +39502,17 @@
 /* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	module.exports = __webpack_require__(188);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Footer = function Footer() {
-	  return _react2.default.createElement("div", { className: "footer" });
-	};
-	
-	exports.default = Footer;
+
 
 /***/ },
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(189);
-	
-
-
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
-			module.exports = factory(__webpack_require__(190));
+			module.exports = factory(__webpack_require__(189));
 		else if(typeof define === 'function' && define.amd)
 			define(["firebase"], factory);
 		else {
@@ -40150,7 +40142,7 @@
 	;
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40160,12 +40152,12 @@
 	 *
 	 *   firebase = require('firebase');
 	 */
-	__webpack_require__(191);
+	__webpack_require__(190);
 	module.exports = firebase;
 
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.3.2
@@ -40750,6 +40742,28 @@
 	(function(){function a(a){return new Y(a)}var b={TaskState:va,TaskEvent:ua,StringFormat:Ua,Storage:Y,Reference:X};if(window.firebase&&firebase.INTERNAL&&firebase.INTERNAL.registerService)firebase.INTERNAL.registerService("storage",a,b);else throw Error("Cannot install Firebase Storage - be sure to load firebase-app.js first.");})();})();
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Footer = function Footer() {
+	  return _react2.default.createElement("div", { className: "footer" });
+	};
+	
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);

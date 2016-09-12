@@ -25,7 +25,7 @@ export default class Splash extends React.Component {
       if (user) {
         that.setState({ currentUser: user });
       } else {
-        console.log("No user signed in");
+        // no user signed in
       }
     });
 
@@ -72,7 +72,7 @@ export default class Splash extends React.Component {
         <div className="splash-container">
           <Header />
           <Auth />
-          <Results />
+          <Results games={this.state.games}/>
         </div>
       );
     }
