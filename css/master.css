@@ -58,7 +58,7 @@ body {
 .profile-container img {
   height: 100px;
   width: 100px;
-  border-radius: 40px;
+  border-radius: 44px;
 }
 
 .auth-button {
@@ -97,6 +97,11 @@ body {
   align-items: center;
   flex-direction: column;
   min-height: 100px;
+
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 }
 
 .new-game-info {
@@ -153,7 +158,7 @@ body {
 .submit-button {
   border-radius: 10px;
   border: 2px solid #bdbdff;
-  background: rgb(189, 189, 255);
+  background: rgb(217, 217, 255);
   color: #406fff;
   padding: 10px;
   cursor: pointer;
@@ -162,15 +167,50 @@ body {
 }
 
 .submit-button:active {
-  background: rgb(217, 217, 255);
+  background: rgb(189, 189, 255);
 }
 
 .results-container {
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.result-container {
+  border: 2px solid #ff7e7e;
+  width: 100px;
+  min-height: 125px;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 12px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 300px;
+}
+
+.player-result {
+  font-size: 14px;
+}
+
+.result-winner {
+  font-size: 2.3em;
+  background: #d5ffd5;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-top: 9px;
+}
+
+.result-players {
+  margin-bottom: 7px;
+  margin-top: 4px;
+}
+
+.divider {
+  width: 500px;
+  height: 1px;
+  margin-top: 10px;
+  background: #b5b5d6;
 }
 
 .footer {

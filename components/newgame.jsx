@@ -10,8 +10,9 @@ export default class NewGame extends React.Component {
   constructor () {
     super();
     this.state = {
-      potentialPlayers: ["test1"],
+      potentialPlayers: ["user1", "user2", "user3"],
       currentPlayers: [],
+      currentPlayerIDs: [],
       winner: undefined
     };
   }
@@ -91,7 +92,23 @@ export default class NewGame extends React.Component {
   }
 
   handleSubmit () {
+    let gameData = {
+      players: this.state.currentPlayers,
+      winner: this.state.winner,
+      playerCount: this.state.currentPlayers.length,
+      game: "darts"
+    };
 
+    // Get a key for a new Game.
+    var newGameKey = firebase.database().ref().child('posts').push().key;
+
+    // Write the new game's data simultaneously in the games list and the users' game list.
+    var updates = {};
+    updates['/games/' + newGameKey] = gameData;
+    // updates['/users/' + uid + '/games/' + newGameKey] = postData;
+
+    firebase.database().ref().update(updates);
+    this.setState({ currentPlayers: [], winner: undefined });
   }
 
   render () {
@@ -109,10 +126,11 @@ export default class NewGame extends React.Component {
             winner
           </div>
         </div>
-        {this.renderSubmit()}
         <div className="user-selector-container">
           {this.showPotentialPlayers()}
         </div>
+        {this.renderSubmit()}
+        <div className="divider" />
       </div>
     );
   }

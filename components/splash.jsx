@@ -14,7 +14,8 @@ export default class Splash extends React.Component {
   constructor () {
     super();
     this.state = {
-      currentUser: undefined
+      currentUser: undefined,
+      games: []
     };
   }
 
@@ -27,6 +28,17 @@ export default class Splash extends React.Component {
         console.log("No user signed in");
       }
     });
+
+    return firebase.database().ref('/games').once('value').then(function(snapshot) {
+      const games = snapshot.val();
+      _.forOwn(games, (key, value) => {
+        let game = key;
+        let games = that.state.games;
+        games.push(game);
+        that.setState({ games: games });
+      });
+    });
+
   }
 
   render () {
@@ -37,7 +49,8 @@ export default class Splash extends React.Component {
           <Header />
           <Auth />
           <NewGame currentUser={username} />
-          <Results currentUser={this.state.currentUser} />
+          <Results currentUser={this.state.currentUser}
+                   games={this.state.games} />
         </div>
       );
     } else {
