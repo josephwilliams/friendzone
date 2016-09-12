@@ -109,6 +109,7 @@ export default class NewGame extends React.Component {
 
     firebase.database().ref().update(updates);
     this.setState({ currentPlayers: [], winner: undefined });
+    this.props.forceUpdate();
   }
 
   render () {

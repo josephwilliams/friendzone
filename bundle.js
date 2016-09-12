@@ -21551,7 +21551,8 @@
 	          { className: 'splash-container' },
 	          _react2.default.createElement(_header2.default, null),
 	          _react2.default.createElement(_auth2.default, null),
-	          _react2.default.createElement(_newgame2.default, { currentUser: username }),
+	          _react2.default.createElement(_newgame2.default, { currentUser: username,
+	            forceUpdate: this.forceUpdate.bind(this) }),
 	          _react2.default.createElement(_results2.default, { currentUser: this.state.currentUser,
 	            games: this.state.games })
 	        );
@@ -39258,6 +39259,7 @@
 	
 	      firebase.database().ref().update(updates);
 	      this.setState({ currentPlayers: [], winner: undefined });
+	      this.props.forceUpdate();
 	    }
 	  }, {
 	    key: 'render',

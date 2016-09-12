@@ -13,7 +13,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #ff7e7e;
-  height: 130px;
+  height: 135px;
 }
 
 .big-circle {
@@ -175,6 +175,8 @@ body {
   align-items: flex-start;
   justify-content: center;
   margin-top: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
 }
 
 .result-container {

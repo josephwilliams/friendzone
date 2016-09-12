@@ -48,7 +48,8 @@ export default class Splash extends React.Component {
         <div className="splash-container">
           <Header />
           <Auth />
-          <NewGame currentUser={username} />
+          <NewGame currentUser={username}
+                   forceUpdate={this.forceUpdate.bind((this))}/>
           <Results currentUser={this.state.currentUser}
                    games={this.state.games} />
         </div>
