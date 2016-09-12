@@ -21542,6 +21542,21 @@
 	      });
 	    }
 	  }, {
+	    key: 'forceUpdate',
+	    value: function forceUpdate() {
+	      this.setState({ games: [] });
+	      var that = this;
+	      return firebase.database().ref('/games').once('value').then(function (snapshot) {
+	        var games = snapshot.val();
+	        _.forOwn(games, function (key, value) {
+	          var game = key;
+	          var games = that.state.games;
+	          games.push(game);
+	          that.setState({ games: games });
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.state.currentUser) {
@@ -39365,7 +39380,7 @@
 	  _createClass(Results, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      base.syncState('games', {
+	      base.syncState('games/', {
 	        context: this,
 	        state: 'games',
 	        asArray: true

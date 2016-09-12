@@ -38,7 +38,20 @@ export default class Splash extends React.Component {
         that.setState({ games: games });
       });
     });
+  }
 
+  forceUpdate () {
+    this.setState({ games: [] });
+    let that = this;
+    return firebase.database().ref('/games').once('value').then(function(snapshot) {
+      const games = snapshot.val();
+      _.forOwn(games, (key, value) => {
+        let game = key;
+        let games = that.state.games;
+        games.push(game);
+        that.setState({ games: games });
+      });
+    });
   }
 
   render () {

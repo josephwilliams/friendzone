@@ -24,7 +24,7 @@ export default class Results extends React.Component {
   }
 
   componentDidMount () {
-    base.syncState(`games`, {
+    base.syncState(`games/`, {
       context: this,
       state: 'games',
       asArray: true
