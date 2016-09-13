@@ -21527,7 +21527,7 @@
 	        if (user) {
 	          that.setState({ currentUser: user });
 	        } else {
-	          console.log("No user signed in");
+	          that.setState({ currentUser: undefined });
 	        }
 	      });
 	
@@ -21577,7 +21577,7 @@
 	          { className: 'splash-container' },
 	          _react2.default.createElement(_header2.default, null),
 	          _react2.default.createElement(_auth2.default, null),
-	          _react2.default.createElement(_results2.default, null)
+	          _react2.default.createElement(_results2.default, { games: this.state.games })
 	        );
 	      }
 	    }
@@ -39156,13 +39156,13 @@
 	var NewGame = function (_React$Component) {
 	  _inherits(NewGame, _React$Component);
 	
-	  function NewGame() {
+	  function NewGame(props) {
 	    _classCallCheck(this, NewGame);
 	
-	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this));
+	    var _this = _possibleConstructorReturn(this, (NewGame.__proto__ || Object.getPrototypeOf(NewGame)).call(this, props));
 	
 	    _this.state = {
-	      potentialPlayers: ["karl"],
+	      potentialPlayers: [],
 	      currentPlayers: [],
 	      currentPlayerIDs: [],
 	      winner: undefined
@@ -39181,52 +39181,66 @@
 	          var players = that.state.potentialPlayers;
 	          players.push(name);
 	          that.setState({ potentialPlayers: players });
+	          that.handleCurrentUser(name);
 	        });
 	      });
+	    }
+	  }, {
+	    key: 'handleCurrentUser',
+	    value: function handleCurrentUser(name) {
+	      if (this.props.currentUser === name) {
+	        var currentPlayers = this.state.currentPlayers;
+	        currentPlayers.push(name);
+	        this.setState({ currentPlayers: currentPlayers });
+	      }
 	    }
 	  }, {
 	    key: 'showPotentialPlayers',
 	    value: function showPotentialPlayers() {
 	      var _this2 = this;
 	
-	      if (this.state.potentialPlayers.length > 0) {
-	        return this.state.potentialPlayers.map(function (player, playerId) {
-	          if (_this2.state.winner === player) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector-winner',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          } else if (_lodash2.default.includes(_this2.state.currentPlayers, player)) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector-active',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          } else {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'user-selector',
-	                'data-tag': player,
-	                onClick: _this2.handleClick.bind(_this2),
-	                key: playerId },
-	              player
-	            );
-	          }
-	        });
-	      }
+	      return this.state.potentialPlayers.map(function (player, playerId) {
+	        if (_this2.state.winner === player) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector-winner',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        } else if (_lodash2.default.includes(_this2.state.currentPlayers, player)) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector-active',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'user-selector',
+	              'data-tag': player,
+	              onClick: _this2.handleClick.bind(_this2),
+	              key: playerId },
+	            player
+	          );
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(event) {
 	      var player = event.target.dataset.tag;
-	      if (this.state.winner === player) {
+	      if (player === this.props.currentUser) {
+	        if (player === this.state.winner) {
+	          this.setState({ winner: undefined });
+	        } else {
+	          this.setState({ winner: player });
+	        }
+	      } else if (this.state.winner === player) {
 	        var players = this.state.currentPlayers;
 	        var idx = players.indexOf(player);
 	        players.splice(idx, 1);
@@ -39274,6 +39288,8 @@
 	
 	      firebase.database().ref().update(updates);
 	      this.setState({ currentPlayers: [], winner: undefined });
+	      // resets (forces) currentUser into this.state.currentPlayers
+	      this.handleCurrentUser(this.props.currentUser);
 	      this.props.forceUpdate();
 	    }
 	  }, {
