@@ -208,6 +208,11 @@ body {
   margin-top: 4px;
 }
 
+.result-time {
+  font-size: 10px;
+  margin-bottom: 3px;
+}
+
 .divider {
   width: 500px;
   height: 1px;

@@ -39144,6 +39144,10 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
+	var _reactTimeago = __webpack_require__(192);
+	
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39178,7 +39182,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      return firebase.database().ref('/users').once('value').then(function (snapshot) {
+	      firebase.database().ref('/users').once('value').then(function (snapshot) {
 	        var users = snapshot.val();
 	        _lodash2.default.forOwn(users, function (key, value) {
 	          var name = key.username.split(' ')[0];
@@ -39278,10 +39282,13 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit() {
+	      var date = new Date();
+	
 	      var gameData = {
 	        players: this.state.currentPlayers,
 	        winner: this.state.winner,
 	        playerCount: this.state.currentPlayers.length,
+	        date: date,
 	        game: "darts"
 	      };
 	
@@ -39302,9 +39309,11 @@
 	  }, {
 	    key: 'displayBoard',
 	    value: function displayBoard() {
+	      var date = new Date();
 	      var gameData = {
 	        players: this.state.currentPlayers,
-	        winner: this.state.winner
+	        winner: this.state.winner,
+	        date: date
 	      };
 	
 	      if (this.state.winner && this.state.currentPlayers.length > 1) {
@@ -39500,6 +39509,13 @@
 	      });
 	    }
 	  }, {
+	    key: 'displayTime',
+	    value: function displayTime() {
+	      if (this.props.game.date) {
+	        return _react2.default.createElement(_reactTimeago2.default, { date: this.props.game.date });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -39515,7 +39531,11 @@
 	          { className: 'result-players' },
 	          this.displayPlayers()
 	        ),
-	        _react2.default.createElement('div', { className: 'result-time' })
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'result-time' },
+	          this.displayTime()
+	        )
 	      );
 	    }
 	  }]);

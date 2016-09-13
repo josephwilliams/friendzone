@@ -1,6 +1,7 @@
 import React from 'react';
 import Result from './gameresult';
 import _ from 'lodash';
+import TimeAgo from 'react-timeago';
 
 //Firebase
 var firebase = require('firebase/app');
@@ -20,7 +21,7 @@ export default class NewGame extends React.Component {
 
   componentDidMount () {
     let that = this;
-    return firebase.database().ref('/users').once('value').then(function(snapshot) {
+    firebase.database().ref('/users').once('value').then(function(snapshot) {
       const users = snapshot.val();
       _.forOwn(users, (key, value) => {
         let name = key.username.split(' ')[0];
@@ -109,11 +110,14 @@ export default class NewGame extends React.Component {
   }
 
   handleSubmit () {
+    let date = new Date();
+
     let gameData = {
       players: this.state.currentPlayers,
       winner: this.state.winner,
       playerCount: this.state.currentPlayers.length,
-      game: "darts"
+      date: date,
+      game: "darts",
     };
 
     // Get a key for a new Game.
@@ -132,9 +136,11 @@ export default class NewGame extends React.Component {
   }
 
   displayBoard () {
+    let date = new Date();
     let gameData = {
       players: this.state.currentPlayers,
       winner: this.state.winner,
+      date: date,
     };
 
     if (this.state.winner && this.state.currentPlayers.length > 1){

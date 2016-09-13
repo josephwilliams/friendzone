@@ -1,4 +1,5 @@
 import React from 'react';
+import TimeAgo from 'react-timeago';
 
 export default class Result extends React.Component {
   constructor () {
@@ -17,6 +18,14 @@ export default class Result extends React.Component {
     )
   }
 
+  displayTime () {
+    if (this.props.game.date) {
+      return (
+        <TimeAgo date={this.props.game.date} />
+      );
+    }
+  }
+
   render () {
     return (
       <div className="result-container">
@@ -25,6 +34,9 @@ export default class Result extends React.Component {
         </div>
         <div className="result-players">
           {this.displayPlayers()}
+        </div>
+        <div className="result-time">
+          {this.displayTime()}
         </div>
       </div>
     );
