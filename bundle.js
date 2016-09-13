@@ -39319,6 +39319,7 @@
 	          { className: 'user-selector-container' },
 	          this.showPotentialPlayers()
 	        ),
+	        this.displayBoard(),
 	        this.renderSubmit(),
 	        _react2.default.createElement('div', { className: 'divider' })
 	      );

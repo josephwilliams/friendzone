@@ -143,6 +143,7 @@ export default class NewGame extends React.Component {
         <div className="user-selector-container">
           {this.showPotentialPlayers()}
         </div>
+        {this.displayBoard()}
         {this.renderSubmit()}
         <div className="divider" />
       </div>
