@@ -102,7 +102,27 @@ body {
 }
 
 .personal-stats-container {
+  border-radius: 10px;
+  background: rgba(154, 126, 255, 0.1);
+  padding: 10px;
+  margin: 10px;
+  cursor: default;
+}
 
+.stat-holder {
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  color: #6161a8;
+  padding: 10px;
+  margin: 10px;
+}
+
+.stat-type {
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 18px;
 }
 
 .new-game-container {

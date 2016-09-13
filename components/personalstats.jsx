@@ -35,11 +35,14 @@ export default class Stats extends React.Component {
   render () {
     return (
       <div className="personal-stats-container">
-        <h5>your stats</h5>
-        <h4>wins:</h4>
-        <h3>{this.state.wins}</h3>
-        <h4>losses:</h4>
-        <h3>{this.state.losses}</h3>
+        <div className="stat-holder">
+          <div className="stat-type">wins</div>
+          <div className="stat-value">{this.state.wins}</div>
+        </div>
+        <div className="stat-holder">
+          <div className="stat-type">losses</div>
+          <div className="stat-value">{this.state.losses}</div>
+        </div>
       </div>
     );
   }

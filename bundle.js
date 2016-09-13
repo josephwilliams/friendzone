@@ -41066,29 +41066,32 @@
 	        'div',
 	        { className: 'personal-stats-container' },
 	        _react2.default.createElement(
-	          'h5',
-	          null,
-	          'your stats'
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'wins'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.wins
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'wins:'
-	        ),
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          this.state.wins
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'losses:'
-	        ),
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          this.state.losses
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'losses'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.losses
+	          )
 	        )
 	      );
 	    }
