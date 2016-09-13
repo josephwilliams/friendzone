@@ -112,6 +112,19 @@ export default class NewGame extends React.Component {
     this.props.forceUpdate();
   }
 
+  displayBoard () {
+    let gameData = {
+      players: this.state.currentPlayers,
+      winner: this.state.winner,
+    };
+
+    if (this.state.winner && this.state.currentPlayers.length > 1){
+      return (
+        <Result game={gameData} />
+      )
+    }
+  }
+
   render () {
     let tempStyle = {"cursor":"default", "fontSize":"12px"}
     return (
