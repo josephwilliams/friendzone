@@ -30,7 +30,7 @@ export default class Splash extends React.Component {
       }
     });
 
-    return firebase.database().ref('/games').once('value').then(function(snapshot) {
+    firebase.database().ref('/games').once('value').then(function(snapshot) {
       const games = snapshot.val();
       _.forOwn(games, (key, value) => {
         let game = key;
@@ -62,7 +62,7 @@ export default class Splash extends React.Component {
           <Header />
           <div className="personal-container">
             <Auth />
-            <PersonalStats user={this.state.currentUser} />
+            <PersonalStats currentUser={this.state.currentUser} />
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>

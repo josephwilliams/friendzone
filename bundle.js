@@ -21535,7 +21535,7 @@
 	        }
 	      });
 	
-	      return firebase.database().ref('/games').once('value').then(function (snapshot) {
+	      firebase.database().ref('/games').once('value').then(function (snapshot) {
 	        var games = snapshot.val();
 	        _.forOwn(games, function (key, value) {
 	          var game = key;
@@ -21572,7 +21572,7 @@
 	            'div',
 	            { className: 'personal-container' },
 	            _react2.default.createElement(_auth2.default, null),
-	            _react2.default.createElement(_personalstats2.default, { user: this.state.currentUser })
+	            _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser })
 	          ),
 	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
 	            forceUpdate: this.forceUpdate.bind(this) }),
@@ -40996,7 +40996,7 @@
 /* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -41019,19 +41019,77 @@
 	var Stats = function (_React$Component) {
 	  _inherits(Stats, _React$Component);
 	
-	  function Stats() {
+	  function Stats(props) {
 	    _classCallCheck(this, Stats);
 	
-	    return _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this, props));
+	
+	    _this.state = {
+	      wins: 0,
+	      losses: 0
+	    };
+	
+	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
+	    return _this;
 	  }
 	
 	  _createClass(Stats, [{
-	    key: "render",
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.determineCounts();
+	    }
+	  }, {
+	    key: 'determineCounts',
+	    value: function determineCounts() {
+	      var uid = this.props.user.uid;
+	      var _2 = 0;
+	      var wins = _2.wins;
+	      var losses = _2.losses;
+	
+	      var that = this;
+	      firebase.database().ref('/users/' + uid + "/games").once('value').then(function (snapshot) {
+	        var games = snapshot.val();
+	        _.forOwn(games, function (key, value) {
+	          var game = key;
+	          game.winner === that.username ? wins += 1 : losses += 1;
+	        });
+	      });
+	
+	      this.setState({
+	        wins: wins, losses: losses
+	      });
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "personal-stats-container" },
-	        "stats"
+	        'div',
+	        { className: 'personal-stats-container' },
+	        _react2.default.createElement(
+	          'h5',
+	          null,
+	          'your stats'
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'wins:'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          this.state.wins
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'losses:'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          this.state.losses
+	        )
 	      );
 	    }
 	  }]);
