@@ -6,6 +6,7 @@ export default class Stats extends React.Component {
     this.state = {
       wins: 0,
       losses: 0,
+      bestStreak: 0,
     };
 
     this.username = this.props.currentUser.displayName.split(' ')[0];
@@ -33,15 +34,31 @@ export default class Stats extends React.Component {
   }
 
   render () {
+    let num1 = Math.round(this.state.wins * 10.0) / 10
+    let num2 = Math.round(this.state.losses * 10.0) / 10
+    debugger
+    let winPercentage = (num1 / num2);
     return (
-      <div className="personal-stats-container">
-        <div className="stat-holder">
-          <div className="stat-type">wins</div>
-          <div className="stat-value">{this.state.wins}</div>
+      <div style={{display:"flex"}}>
+        <div className="personal-stats-container">
+          <div className="stat-holder">
+            <div className="stat-type">wins</div>
+            <div className="stat-value">{this.state.wins}</div>
+          </div>
+          <div className="stat-holder">
+            <div className="stat-type">losses</div>
+            <div className="stat-value">{this.state.losses}</div>
+          </div>
         </div>
-        <div className="stat-holder">
-          <div className="stat-type">losses</div>
-          <div className="stat-value">{this.state.losses}</div>
+        <div className="personal-stats-container">
+          <div className="stat-holder">
+            <div className="stat-type">win %</div>
+            <div className="stat-value">{winPercentage}</div>
+          </div>
+          <div className="stat-holder">
+            <div className="stat-type">best streak</div>
+            <div className="stat-value">{this.state.bestStreak}</div>
+          </div>
         </div>
       </div>
     );

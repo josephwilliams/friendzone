@@ -41026,7 +41026,8 @@
 	
 	    _this.state = {
 	      wins: 0,
-	      losses: 0
+	      losses: 0,
+	      bestStreak: 0
 	    };
 	
 	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
@@ -41062,35 +41063,75 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var num1 = Math.round(this.state.wins * 10.0) / 10;
+	      var num2 = Math.round(this.state.losses * 10.0) / 10;
+	      debugger;
+	      var winPercentage = num1 / num2;
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'personal-stats-container' },
+	        { style: { display: "flex" } },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'stat-holder' },
+	          { className: 'personal-stats-container' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'stat-type' },
-	            'wins'
+	            { className: 'stat-holder' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-type' },
+	              'wins'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-value' },
+	              this.state.wins
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'stat-value' },
-	            this.state.wins
+	            { className: 'stat-holder' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-type' },
+	              'losses'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-value' },
+	              this.state.losses
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'stat-holder' },
+	          { className: 'personal-stats-container' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'stat-type' },
-	            'losses'
+	            { className: 'stat-holder' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-type' },
+	              'win %'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-value' },
+	              winPercentage
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'stat-value' },
-	            this.state.losses
+	            { className: 'stat-holder' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-type' },
+	              'best streak'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-value' },
+	              this.state.bestStreak
+	            )
 	          )
 	        )
 	      );

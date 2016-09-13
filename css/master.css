@@ -65,6 +65,10 @@ body {
   min-height: 120px;
 }
 
+.profile-container h3 {
+  margin: 10px;
+}
+
 .profile-container img {
   height: 100px;
   width: 100px;
@@ -234,7 +238,7 @@ body {
   background: #d5ffd5;
   padding: 3px 6px;
   border-radius: 6px;
-  margin-top: 7px;
+  margin-top: 4px;
 }
 
 .result-players {
