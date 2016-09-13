@@ -4,6 +4,7 @@ import Auth from './auth';
 import NewGame from './newgame';
 import Results from './results';
 import Footer from './footer';
+import PersonalStats from './personalstats';
 
 //Firebase
 var firebase = require('firebase/app');
@@ -29,7 +30,7 @@ export default class Splash extends React.Component {
       }
     });
 
-    return firebase.database().ref('/games').once('value').then(function(snapshot) {
+    firebase.database().ref('/games').once('value').then(function(snapshot) {
       const games = snapshot.val();
       _.forOwn(games, (key, value) => {
         let game = key;
@@ -56,12 +57,14 @@ export default class Splash extends React.Component {
 
   render () {
     if (this.state.currentUser) {
-      const username = this.state.currentUser.displayName.split(' ')[0];
       return (
         <div className="splash-container">
           <Header />
-          <Auth />
-          <NewGame currentUser={username}
+          <div className="personal-container">
+            <Auth />
+            <PersonalStats currentUser={this.state.currentUser} />
+          </div>
+          <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>
           <Results currentUser={this.state.currentUser}
                    games={this.state.games} />

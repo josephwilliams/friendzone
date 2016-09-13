@@ -45,6 +45,16 @@ body {
   border-radius: 35px;
 }
 
+/* contains auth and personal stats */
+.personal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2fff7;
+  min-height: 120px;
+  padding: 30px;
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -89,6 +99,30 @@ body {
 .sign-out-button:hover {
   transition: all 0.3s ease-in-out;
   border: 2px solid #60d9ff;
+}
+
+.personal-stats-container {
+  border-radius: 10px;
+  background: rgba(154, 126, 255, 0.1);
+  padding: 10px;
+  margin: 10px;
+  cursor: default;
+}
+
+.stat-holder {
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  color: #6161a8;
+  padding: 10px;
+  margin: 10px;
+}
+
+.stat-type {
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 18px;
 }
 
 .new-game-container {
@@ -206,6 +240,11 @@ body {
 .result-players {
   margin-bottom: 7px;
   margin-top: 4px;
+}
+
+.result-time {
+  font-size: 10px;
+  margin-bottom: 3px;
 }
 
 .divider {

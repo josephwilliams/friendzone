@@ -21491,6 +21491,10 @@
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
+	var _personalstats = __webpack_require__(194);
+	
+	var _personalstats2 = _interopRequireDefault(_personalstats);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21531,7 +21535,7 @@
 	        }
 	      });
 	
-	      return firebase.database().ref('/games').once('value').then(function (snapshot) {
+	      firebase.database().ref('/games').once('value').then(function (snapshot) {
 	        var games = snapshot.val();
 	        _.forOwn(games, function (key, value) {
 	          var game = key;
@@ -21560,13 +21564,17 @@
 	    key: 'render',
 	    value: function render() {
 	      if (this.state.currentUser) {
-	        var username = this.state.currentUser.displayName.split(' ')[0];
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'splash-container' },
 	          _react2.default.createElement(_header2.default, null),
-	          _react2.default.createElement(_auth2.default, null),
-	          _react2.default.createElement(_newgame2.default, { currentUser: username,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'personal-container' },
+	            _react2.default.createElement(_auth2.default, null),
+	            _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser })
+	          ),
+	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
 	            forceUpdate: this.forceUpdate.bind(this) }),
 	          _react2.default.createElement(_results2.default, { currentUser: this.state.currentUser,
 	            games: this.state.games })
@@ -39136,9 +39144,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _gameresult = __webpack_require__(186);
+	
+	var _gameresult2 = _interopRequireDefault(_gameresult);
+	
 	var _lodash = __webpack_require__(176);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _reactTimeago = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-timeago\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39167,6 +39183,8 @@
 	      currentPlayerIDs: [],
 	      winner: undefined
 	    };
+	
+	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
 	    return _this;
 	  }
 	
@@ -39174,7 +39192,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      return firebase.database().ref('/users').once('value').then(function (snapshot) {
+	      firebase.database().ref('/users').once('value').then(function (snapshot) {
 	        var users = snapshot.val();
 	        _lodash2.default.forOwn(users, function (key, value) {
 	          var name = key.username.split(' ')[0];
@@ -39188,7 +39206,7 @@
 	  }, {
 	    key: 'handleCurrentUser',
 	    value: function handleCurrentUser(name) {
-	      if (this.props.currentUser === name) {
+	      if (this.username === name) {
 	        var currentPlayers = this.state.currentPlayers;
 	        currentPlayers.push(name);
 	        this.setState({ currentPlayers: currentPlayers });
@@ -39233,25 +39251,34 @@
 	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(event) {
-	      var player = event.target.dataset.tag;
-	      if (player === this.props.currentUser) {
-	        if (player === this.state.winner) {
-	          this.setState({ winner: undefined });
+	      var selection = event.target.dataset.tag;
+	      if (selection === this.username) {
+	        if (selection === this.state.winner) {
+	          var players = this.state.currentPlayers;
+	          var idx = players.indexOf(selection);
+	          players.splice(idx, 1);
+	          this.setState({ currentPlayers: players, winner: undefined });
 	        } else {
-	          this.setState({ winner: player });
+	          this.setState({ winner: selection });
 	        }
-	      } else if (this.state.winner === player) {
-	        var players = this.state.currentPlayers;
-	        var idx = players.indexOf(player);
-	        players.splice(idx, 1);
-	        this.setState({ currentPlayers: players, winner: undefined });
-	      } else if (!_lodash2.default.includes(this.state.currentPlayers, player)) {
+	      } else if (this.state.winner === selection) {
 	        var _players = this.state.currentPlayers;
-	        _players.push(player);
-	        this.setState({ currentPlayers: _players });
+	        var _idx = _players.indexOf(selection);
+	        _players.splice(_idx, 1);
+	        this.setState({ currentPlayers: _players, winner: undefined });
+	      } else if (!_lodash2.default.includes(this.state.currentPlayers, selection)) {
+	        var _players2 = this.state.currentPlayers;
+	        _players2.push(selection);
+	        this.setState({ currentPlayers: _players2 });
 	      } else {
-	        this.setState({ winner: player });
+	        this.setState({ winner: selection });
 	      }
+	
+	      if (!_lodash2.default.includes(this.state.currentPlayers, this.username)) {
+	        var _players3 = this.state.currentPlayers;
+	        _players3.push(this.username);
+	        this.setState({ currentPlayers: _players3 });
+	      };
 	    }
 	  }, {
 	    key: 'renderSubmit',
@@ -39271,26 +39298,44 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit() {
+	      var date = new Date();
+	
 	      var gameData = {
 	        players: this.state.currentPlayers,
 	        winner: this.state.winner,
 	        playerCount: this.state.currentPlayers.length,
+	        date: date,
 	        game: "darts"
 	      };
 	
 	      // Get a key for a new Game.
 	      var newGameKey = firebase.database().ref().child('posts').push().key;
+	      var uid = this.props.currentUser.uid;
 	
 	      // Write the new game's data simultaneously in the games list and the users' game list.
 	      var updates = {};
 	      updates['/games/' + newGameKey] = gameData;
-	      // updates['/users/' + uid + '/games/' + newGameKey] = postData;
+	      updates['/users/' + uid + '/games/' + newGameKey] = gameData;
 	
 	      firebase.database().ref().update(updates);
 	      this.setState({ currentPlayers: [], winner: undefined });
 	      // resets (forces) currentUser into this.state.currentPlayers
-	      this.handleCurrentUser(this.props.currentUser);
+	      this.handleCurrentUser(this.username);
 	      this.props.forceUpdate();
+	    }
+	  }, {
+	    key: 'displayBoard',
+	    value: function displayBoard() {
+	      var date = new Date();
+	      var gameData = {
+	        players: this.state.currentPlayers,
+	        winner: this.state.winner,
+	        date: date
+	      };
+	
+	      if (this.state.winner && this.state.currentPlayers.length > 1) {
+	        return _react2.default.createElement(_gameresult2.default, { game: gameData });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -39323,6 +39368,7 @@
 	          { className: 'user-selector-container' },
 	          this.showPotentialPlayers()
 	        ),
+	        this.displayBoard(),
 	        this.renderSubmit(),
 	        _react2.default.createElement('div', { className: 'divider' })
 	      );
@@ -39431,7 +39477,7 @@
 /* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -39442,6 +39488,10 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactTimeago = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-timeago\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39461,35 +39511,47 @@
 	  }
 	
 	  _createClass(Result, [{
-	    key: "displayPlayers",
+	    key: 'displayPlayers',
 	    value: function displayPlayers() {
 	      var _this2 = this;
 	
 	      return this.props.game.players.map(function (player, id) {
 	        if (player !== _this2.props.game.winner) {
 	          return _react2.default.createElement(
-	            "div",
-	            { className: "player-result", key: id },
+	            'div',
+	            { className: 'player-result', key: id },
 	            player
 	          );
 	        }
 	      });
 	    }
 	  }, {
-	    key: "render",
+	    key: 'displayTime',
+	    value: function displayTime() {
+	      if (this.props.game.date) {
+	        return _react2.default.createElement(_reactTimeago2.default, { date: this.props.game.date });
+	      }
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "result-container" },
+	        'div',
+	        { className: 'result-container' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "result-winner" },
+	          'div',
+	          { className: 'result-winner' },
 	          this.props.game.winner
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "result-players" },
+	          'div',
+	          { className: 'result-players' },
 	          this.displayPlayers()
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'result-time' },
+	          this.displayTime()
 	        )
 	      );
 	    }
@@ -40766,6 +40828,118 @@
 	};
 	
 	exports.default = Footer;
+
+/***/ },
+/* 192 */,
+/* 193 */,
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Stats = function (_React$Component) {
+	  _inherits(Stats, _React$Component);
+	
+	  function Stats(props) {
+	    _classCallCheck(this, Stats);
+	
+	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this, props));
+	
+	    _this.state = {
+	      wins: 0,
+	      losses: 0
+	    };
+	
+	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
+	    return _this;
+	  }
+	
+	  _createClass(Stats, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.determineCounts();
+	    }
+	  }, {
+	    key: 'determineCounts',
+	    value: function determineCounts() {
+	      var uid = this.props.user.uid;
+	      var _2 = 0;
+	      var wins = _2.wins;
+	      var losses = _2.losses;
+	
+	      var that = this;
+	      firebase.database().ref('/users/' + uid + "/games").once('value').then(function (snapshot) {
+	        var games = snapshot.val();
+	        _.forOwn(games, function (key, value) {
+	          var game = key;
+	          game.winner === that.username ? wins += 1 : losses += 1;
+	        });
+	      });
+	
+	      this.setState({
+	        wins: wins, losses: losses
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'personal-stats-container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'wins'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.wins
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'losses'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.losses
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Stats;
+	}(_react2.default.Component);
+	
+	exports.default = Stats;
 
 /***/ }
 /******/ ]);
