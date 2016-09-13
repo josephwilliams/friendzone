@@ -1,4 +1,5 @@
 import React from 'react';
+import Result from './gameresult';
 import _ from 'lodash';
 
 //Firebase
