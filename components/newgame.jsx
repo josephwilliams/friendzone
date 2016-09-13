@@ -74,24 +74,27 @@ export default class NewGame extends React.Component {
   }
 
   handleClick (event) {
-    let player = event.target.dataset.tag;
-    if (player === this.props.currentUser) {
-      if (player === this.state.winner) {
-        this.setState({ winner: undefined });
+    let selection = event.target.dataset.tag;
+    if (selection === this.props.currentUser) {
+      if (selection === this.state.winner) {
+        let players = this.state.currentPlayers;
+        let idx = players.indexOf(selection);
+        players.splice(idx, 1);
+        this.setState({ currentPlayers: players, winner: undefined });
       } else {
-        this.setState({ winner: player });
+        this.setState({ winner: selection });
       }
-    } else if (this.state.winner === player) {
+    } else if (this.state.winner === selection) {
       let players = this.state.currentPlayers;
-      let idx = players.indexOf(player);
+      let idx = players.indexOf(selection);
       players.splice(idx, 1);
       this.setState({ currentPlayers: players, winner: undefined });
-    } else if (!_.includes(this.state.currentPlayers, player)) {
+    } else if (!_.includes(this.state.currentPlayers, selection)) {
       let players = this.state.currentPlayers
-      players.push(player);
+      players.push(selection);
       this.setState({ currentPlayers: players });
     } else {
-      this.setState({ winner: player });
+      this.setState({ winner: selection });
     }
   }
 

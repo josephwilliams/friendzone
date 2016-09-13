@@ -39136,6 +39136,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _gameresult = __webpack_require__(186);
+	
+	var _gameresult2 = _interopRequireDefault(_gameresult);
+	
 	var _lodash = __webpack_require__(176);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
@@ -39233,24 +39237,27 @@
 	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(event) {
-	      var player = event.target.dataset.tag;
-	      if (player === this.props.currentUser) {
-	        if (player === this.state.winner) {
-	          this.setState({ winner: undefined });
+	      var selection = event.target.dataset.tag;
+	      if (selection === this.props.currentUser) {
+	        if (selection === this.state.winner) {
+	          var players = this.state.currentPlayers;
+	          var idx = players.indexOf(selection);
+	          players.splice(idx, 1);
+	          this.setState({ currentPlayers: players, winner: undefined });
 	        } else {
-	          this.setState({ winner: player });
+	          this.setState({ winner: selection });
 	        }
-	      } else if (this.state.winner === player) {
-	        var players = this.state.currentPlayers;
-	        var idx = players.indexOf(player);
-	        players.splice(idx, 1);
-	        this.setState({ currentPlayers: players, winner: undefined });
-	      } else if (!_lodash2.default.includes(this.state.currentPlayers, player)) {
+	      } else if (this.state.winner === selection) {
 	        var _players = this.state.currentPlayers;
-	        _players.push(player);
-	        this.setState({ currentPlayers: _players });
+	        var _idx = _players.indexOf(selection);
+	        _players.splice(_idx, 1);
+	        this.setState({ currentPlayers: _players, winner: undefined });
+	      } else if (!_lodash2.default.includes(this.state.currentPlayers, selection)) {
+	        var _players2 = this.state.currentPlayers;
+	        _players2.push(selection);
+	        this.setState({ currentPlayers: _players2 });
 	      } else {
-	        this.setState({ winner: player });
+	        this.setState({ winner: selection });
 	      }
 	    }
 	  }, {
@@ -39301,7 +39308,7 @@
 	      };
 	
 	      if (this.state.winner && this.state.currentPlayers.length > 1) {
-	        return _react2.default.createElement(Result, { game: gameData });
+	        return _react2.default.createElement(_gameresult2.default, { game: gameData });
 	      }
 	    }
 	  }, {
