@@ -16,7 +16,10 @@ export default class Splash extends React.Component {
     super();
     this.state = {
       currentUser: undefined,
-      games: []
+      games: [],
+      currentKing: null,
+      wins: 0,
+      losses: 0,
     };
   }
 
@@ -24,21 +27,35 @@ export default class Splash extends React.Component {
     let that = this;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        that.setState({ currentUser: user });
+        const username = user.displayName;
+        let { wins, losses } = 0;
+        let currentKing = null;
+        firebase.database().ref('/games').once('value').then(function(snapshot) {
+          const games = snapshot.val();
+          _.forOwn(games, (key, value) => {
+            let game = key;
+            let games = that.state.games;
+            games.push(game);
+            game.winner === that.username ? wins += 1 : losses += 1;
+            currentKing = game.winner;
+            that.setState({ games: games });
+          });
+        });
+
+        that.setState({
+          currentUser: user,
+          currentKing: currentKing,
+          wins: wins,
+          losses: losses,
+        });
       } else {
         that.setState({ currentUser: undefined });
       }
     });
+  }
 
-    firebase.database().ref('/games').once('value').then(function(snapshot) {
-      const games = snapshot.val();
-      _.forOwn(games, (key, value) => {
-        let game = key;
-        let games = that.state.games;
-        games.push(game);
-        that.setState({ games: games });
-      });
-    });
+  determinePlayerStats () {
+
   }
 
   forceUpdate () {
@@ -62,7 +79,11 @@ export default class Splash extends React.Component {
           <Header />
           <div className="personal-container">
             <Auth />
-            <PersonalStats currentUser={this.state.currentUser} />
+            <PersonalStats currentUser={this.state.currentUser}
+                           currentKing={this.state.currentKing}
+                           wins={this.state.wins}
+                           losses={this.state.losses}
+            />
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>

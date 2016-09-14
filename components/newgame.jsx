@@ -15,7 +15,8 @@ export default class NewGame extends React.Component {
       potentialPlayers: [],
       currentPlayers: [],
       currentPlayerIDs: [],
-      winner: undefined
+      winner: undefined,
+      notes: "",
     };
 
     this.username = this.props.currentUser.displayName.split(' ')[0];
@@ -117,6 +118,23 @@ export default class NewGame extends React.Component {
     }
   }
 
+  renderNotes () {
+    if (this.state.winner !== undefined && this.state.currentPlayers.length > 1) {
+      return (
+        <textarea
+          value={this.state.notes}
+          placeholder={"comments"}
+          className="notes-container"
+          onChange={() => this.handleNotesInput()}>
+        </textarea>
+      )
+    }
+  }
+
+  handleNotesInput (event) {
+   this.setState({notes: event.target.value});
+ }
+
   handleSubmit () {
     let date = new Date();
 
@@ -126,6 +144,7 @@ export default class NewGame extends React.Component {
       playerCount: this.state.currentPlayers.length,
       date: date,
       game: "darts",
+      notes: this.state.notes,
     };
 
     // Get a key for a new Game.
@@ -150,6 +169,7 @@ export default class NewGame extends React.Component {
       players: this.state.currentPlayers,
       winner: this.state.winner,
       date: date,
+      notes: this.state.notes,
     };
 
     if (this.state.winner && this.state.currentPlayers.length > 1){
@@ -164,9 +184,9 @@ export default class NewGame extends React.Component {
     return (
       <div className="new-game-container">
         <div className="new-game-info">
-          <p style={{"marginBottom":"5px"}}>
-            who's playing?
-          </p>
+          <div className="whos-playing">
+            whos playing?
+          </div>
           <div className="user-selector-active" style={tempStyle}>
             participant
           </div>
@@ -178,6 +198,7 @@ export default class NewGame extends React.Component {
           {this.showPotentialPlayers()}
         </div>
         {this.displayBoard()}
+        {this.renderNotes()}
         {this.renderSubmit()}
         <div className="divider" />
       </div>

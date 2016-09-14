@@ -193,6 +193,13 @@ body {
   margin: 5px;
 }
 
+.whos-playing {
+  margin: 5px;
+  border-radius: 10px;
+  background: rgba(154, 126, 255, 0.1);
+  padding: 10px 10px;
+}
+
 .submit-button {
   border-radius: 10px;
   border: 2px solid #bdbdff;
@@ -206,6 +213,31 @@ body {
 
 .submit-button:active {
   background: rgb(189, 189, 255);
+}
+
+.king-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  background: rgb(217, 217, 255);
+  color: #406fff;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 21px;
+  margin: 0px 10px;
+}
+
+.notes-container {
+  font-size: 16px;
+  max-width: 200px;
+  min-height: 30px;
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  margin: 5px;
+  outline: none;
+  padding: 10px;
 }
 
 .results-container {
