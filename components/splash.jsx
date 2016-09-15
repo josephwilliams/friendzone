@@ -49,9 +49,6 @@ export default class Splash extends React.Component {
                  bestStreak = currentStreak;
               }
             } else {
-              // if (currentStreak > bestStreak) {
-              //   bestStreak = currentStreak;
-              // }
               currentStreak = 0;
             }
 

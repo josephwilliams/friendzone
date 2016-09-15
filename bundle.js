@@ -21555,9 +21555,6 @@
 	                    bestStreak = currentStreak;
 	                  }
 	                } else {
-	                  // if (currentStreak > bestStreak) {
-	                  //   bestStreak = currentStreak;
-	                  // }
 	                  currentStreak = 0;
 	                }
 	
@@ -39894,7 +39891,7 @@
 	        var winPercentage = (num1 / num2).toString().slice(2, 4);
 	        return _react2.default.createElement(
 	          'div',
-	          { style: { display: "flex" } },
+	          { className: 'personal-stats-wrapper' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'personal-stats-container' },
@@ -39961,7 +39958,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'personal-stats-container', style: { height: "114px", marginTop: "49px" } },
+	            { className: 'personal-stats-container', style: { height: "118px", marginTop: "49px" } },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'stat-holder' },

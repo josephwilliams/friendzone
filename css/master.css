@@ -105,11 +105,18 @@ body {
   border: 2px solid #60d9ff;
 }
 
+.personal-stats-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 385px;
+}
+
 .personal-stats-container {
   border-radius: 10px;
   background: rgba(154, 126, 255, 0.1);
   padding: 10px;
-  margin: 10px;
+  margin: 2px;
   cursor: default;
 }
 
@@ -223,8 +230,8 @@ body {
   border: 2px solid #bdbdff;
   background: rgb(217, 217, 255);
   color: #406fff;
-  padding: 10px;
-  font-size: 21px;
+  height: 44px;
+  font-size: 25px;
   margin: 0px 10px;
 }
 

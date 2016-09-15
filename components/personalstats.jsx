@@ -40,7 +40,7 @@ export default class Stats extends React.Component {
       let num2 = (Math.round(this.props.losses * 10.0) / 10);
       let winPercentage = (num1 / num2).toString().slice(2,4);
       return (
-        <div style={{display:"flex"}}>
+        <div className="personal-stats-wrapper">
           <div className="personal-stats-container">
             <div className="stat-holder">
               <div className="stat-type">wins</div>
@@ -61,7 +61,7 @@ export default class Stats extends React.Component {
               <div className="stat-value">{this.props.bestStreak}</div>
             </div>
           </div>
-          <div className="personal-stats-container" style={{ height: "114px", marginTop: "49px" }}>
+          <div className="personal-stats-container" style={{ height: "118px", marginTop: "49px" }}>
             <div className="stat-holder">
               <div className="stat-type">
                 current king
