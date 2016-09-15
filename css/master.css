@@ -235,6 +235,20 @@ body {
   margin: 0px 10px;
 }
 
+.pie-wrapper {
+  position: relative;
+}
+
+.pie-chart-container {
+  position: relative;
+}
+
+.percentage-holder {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+}
+
 .notes-container {
   font-size: 16px;
   max-width: 200px;

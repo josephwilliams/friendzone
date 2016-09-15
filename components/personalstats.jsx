@@ -1,4 +1,5 @@
 import React from 'react';
+import PieChart from './piechart';
 
 export default class Stats extends React.Component {
   constructor (props) {
@@ -39,6 +40,7 @@ export default class Stats extends React.Component {
       let num1 = (Math.round(this.props.wins * 10.0) / 10);
       let num2 = (Math.round(this.props.losses * 10.0) / 10);
       let winPercentage = (num1 / num2).toString().slice(2,4);
+      let percentageProps = (num1 / num2)
       return (
         <div className="personal-stats-wrapper">
           <div className="personal-stats-container">
@@ -54,7 +56,9 @@ export default class Stats extends React.Component {
           <div className="personal-stats-container">
             <div className="stat-holder">
               <div className="stat-type">win %</div>
-              <div className="stat-value">{winPercentage}</div>
+              <div className="stat-value">
+                <PieChart percentage={percentageProps} />
+              </div>
             </div>
             <div className="stat-holder">
               <div className="stat-type">best streak</div>
