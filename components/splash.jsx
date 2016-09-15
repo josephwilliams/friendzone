@@ -20,33 +20,54 @@ export default class Splash extends React.Component {
       currentKing: null,
       wins: 0,
       losses: 0,
+      bestStreak: 0,
     };
   }
 
   componentDidMount () {
     let that = this;
+    let wins = 0;
+    let losses = 0;
+    let currentKing = null;
+    let currentStreak = 0;
+    let bestStreak = 0;
+
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        const username = user.displayName;
-        let { wins, losses } = 0;
-        let currentKing = null;
+        const username = user.displayName.split(' ')[0];
         firebase.database().ref('/games').once('value').then(function(snapshot) {
           const games = snapshot.val();
           _.forOwn(games, (key, value) => {
             let game = key;
             let games = that.state.games;
             games.push(game);
-            game.winner === that.username ? wins += 1 : losses += 1;
-            currentKing = game.winner;
-            that.setState({ games: games });
-          });
-        });
+            currentKing === username ? wins += 1 : losses += 1;
 
-        that.setState({
-          currentUser: user,
-          currentKing: currentKing,
-          wins: wins,
-          losses: losses,
+            if (currentKing === username) {
+              currentStreak += 1;
+              if (currentStreak > bestStreak) {
+                 bestStreak = currentStreak;
+              }
+            } else {
+              // if (currentStreak > bestStreak) {
+              //   bestStreak = currentStreak;
+              // }
+              currentStreak = 0;
+            }
+
+            currentKing = game.winner;
+            that.setState({
+              games: games,
+            });
+          });
+        }).then(() => {
+          that.setState({
+            currentUser: user,
+            currentKing: currentKing,
+            wins: wins,
+            losses: losses,
+            bestStreak: bestStreak,
+          });
         });
       } else {
         that.setState({ currentUser: undefined });
@@ -55,7 +76,6 @@ export default class Splash extends React.Component {
   }
 
   determinePlayerStats () {
-
   }
 
   forceUpdate () {
@@ -83,6 +103,7 @@ export default class Splash extends React.Component {
                            currentKing={this.state.currentKing}
                            wins={this.state.wins}
                            losses={this.state.losses}
+                           bestStreak={this.state.bestStreak}
             />
           </div>
           <NewGame currentUser={this.state.currentUser}
