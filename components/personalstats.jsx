@@ -18,6 +18,8 @@ export default class Stats extends React.Component {
   }
 
   determineCounts () {
+    // set this up to grab this info from firebase
+
     // const uid = this.props.user.uid;
     // let { wins, losses } = 0;
     // let that = this;

@@ -41,14 +41,16 @@ export default class Splash extends React.Component {
             let game = key;
             let games = that.state.games;
             games.push(game);
-            currentKing === username ? wins += 1 : losses += 1;
 
             if (currentKing === username) {
+              wins += 1;
+              losses -= 1;
               currentStreak += 1;
               if (currentStreak > bestStreak) {
                  bestStreak = currentStreak;
               }
             } else {
+              losses += 1
               currentStreak = 0;
             }
 

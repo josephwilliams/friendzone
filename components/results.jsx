@@ -2,13 +2,13 @@ import React from 'react';
 import Result from './gameresult';
 import _ from 'lodash';
 
-var Rebase = require('re-base');
-var base = Rebase.createClass({
-  apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
-  authDomain: "friendzone-a9494.firebaseapp.com",
-  databaseURL: "https://friendzone-a9494.firebaseio.com",
-  storageBucket: "friendzone-a9494.appspot.com"
-});
+// var Rebase = require('re-base');
+// var base = Rebase.createClass({
+//   apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
+//   authDomain: "friendzone-a9494.firebaseapp.com",
+//   databaseURL: "https://friendzone-a9494.firebaseio.com",
+//   storageBucket: "friendzone-a9494.appspot.com"
+// });
 
 //Firebase
 var firebase = require('firebase/app');
@@ -24,11 +24,11 @@ export default class Results extends React.Component {
   }
 
   componentDidMount () {
-    base.syncState(`games/`, {
-      context: this,
-      state: 'games',
-      asArray: true
-    });
+    // base.syncState(`games/`, {
+    //   context: this,
+    //   state: 'games',
+    //   asArray: true
+    // });
   }
 
   displayGames () {
