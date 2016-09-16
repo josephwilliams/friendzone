@@ -21483,7 +21483,7 @@
 	
 	var _newgame2 = _interopRequireDefault(_newgame);
 	
-	var _results = __webpack_require__(187);
+	var _results = __webpack_require__(185);
 	
 	var _results2 = _interopRequireDefault(_results);
 	
@@ -39187,7 +39187,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _gameresult = __webpack_require__(185);
+	var _gameresult = __webpack_require__(186);
 	
 	var _gameresult2 = _interopRequireDefault(_gameresult);
 	
@@ -39195,7 +39195,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _reactTimeago = __webpack_require__(186);
+	var _reactTimeago = __webpack_require__(187);
 	
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 	
@@ -39463,7 +39463,100 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactTimeago = __webpack_require__(186);
+	var _gameresult = __webpack_require__(186);
+	
+	var _gameresult2 = _interopRequireDefault(_gameresult);
+	
+	var _lodash = __webpack_require__(176);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// var Rebase = require('re-base');
+	// var base = Rebase.createClass({
+	//   apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
+	//   authDomain: "friendzone-a9494.firebaseapp.com",
+	//   databaseURL: "https://friendzone-a9494.firebaseio.com",
+	//   storageBucket: "friendzone-a9494.appspot.com"
+	// });
+	
+	//Firebase
+	var firebase = __webpack_require__(178);
+	__webpack_require__(180);
+	__webpack_require__(182);
+	
+	var Results = function (_React$Component) {
+	  _inherits(Results, _React$Component);
+	
+	  function Results() {
+	    _classCallCheck(this, Results);
+	
+	    var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this));
+	
+	    _this.state = {
+	      games: []
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Results, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // base.syncState(`games/`, {
+	      //   context: this,
+	      //   state: 'games',
+	      //   asArray: true
+	      // });
+	    }
+	  }, {
+	    key: 'displayGames',
+	    value: function displayGames() {
+	      if (this.props.games && this.props.games.length > 0) {
+	        return this.props.games.map(function (game, gameId) {
+	          return _react2.default.createElement(_gameresult2.default, { game: game, key: gameId });
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'results-container' },
+	        this.displayGames()
+	      );
+	    }
+	  }]);
+	
+	  return Results;
+	}(_react2.default.Component);
+	
+	exports.default = Results;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactTimeago = __webpack_require__(187);
 	
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 	
@@ -39537,7 +39630,7 @@
 	exports.default = Result;
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39698,99 +39791,6 @@
 	  }
 	};
 	exports.default = TimeAgo;
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _gameresult = __webpack_require__(185);
-	
-	var _gameresult2 = _interopRequireDefault(_gameresult);
-	
-	var _lodash = __webpack_require__(176);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// var Rebase = require('re-base');
-	// var base = Rebase.createClass({
-	//   apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
-	//   authDomain: "friendzone-a9494.firebaseapp.com",
-	//   databaseURL: "https://friendzone-a9494.firebaseio.com",
-	//   storageBucket: "friendzone-a9494.appspot.com"
-	// });
-	
-	//Firebase
-	var firebase = __webpack_require__(178);
-	__webpack_require__(180);
-	__webpack_require__(182);
-	
-	var Results = function (_React$Component) {
-	  _inherits(Results, _React$Component);
-	
-	  function Results() {
-	    _classCallCheck(this, Results);
-	
-	    var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this));
-	
-	    _this.state = {
-	      games: []
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(Results, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // base.syncState(`games/`, {
-	      //   context: this,
-	      //   state: 'games',
-	      //   asArray: true
-	      // });
-	    }
-	  }, {
-	    key: 'displayGames',
-	    value: function displayGames() {
-	      if (this.props.games && this.props.games.length > 0) {
-	        return this.props.games.map(function (game, gameId) {
-	          return _react2.default.createElement(_gameresult2.default, { game: game, key: gameId });
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'results-container' },
-	        this.displayGames()
-	      );
-	    }
-	  }]);
-	
-	  return Results;
-	}(_react2.default.Component);
-	
-	exports.default = Results;
 
 /***/ },
 /* 188 */,

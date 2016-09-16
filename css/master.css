@@ -109,7 +109,7 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  width: 385px;
+  width: 411px;
 }
 
 .personal-stats-container {
@@ -118,6 +118,9 @@ body {
   padding: 10px;
   margin: 2px;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .stat-holder {
@@ -125,7 +128,10 @@ body {
   border: 2px solid #bdbdff;
   color: #6161a8;
   padding: 10px;
-  margin: 10px;
+  margin: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  min-width: 60px;
 }
 
 .stat-type {
@@ -233,6 +239,7 @@ body {
   height: 44px;
   font-size: 25px;
   margin: 0px 10px;
+  margin-top: 5px;
 }
 
 .pie-wrapper {
