@@ -42,7 +42,8 @@ export default class Splash extends React.Component {
             let games = that.state.games;
             games.push(game);
 
-            if (currentKing === username) {
+            // bestStreak tracked while wins and losses are determined
+            if (game.winner === username) {
               wins += 1;
               losses -= 1;
               currentStreak += 1;
@@ -54,7 +55,12 @@ export default class Splash extends React.Component {
               currentStreak = 0;
             }
 
-            currentKing = game.winner;
+            console.log(game);
+            // currentKing only set for games of 4 players or more
+            if (game.playerCount > 3) {
+              currentKing = game.winner;
+            }
+
             that.setState({
               games: games,
             });
