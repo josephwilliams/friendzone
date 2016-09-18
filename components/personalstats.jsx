@@ -78,7 +78,6 @@ export default class Stats extends React.Component {
               {this.props.currentKing}
             </div>
           </div>
-
           <div className="personal-stats-container">
             <div className="stat-holder">
               <div className="stat-value">
@@ -86,7 +85,6 @@ export default class Stats extends React.Component {
               </div>
             </div>
           </div>
-          
         </div>
       );
     } else {
