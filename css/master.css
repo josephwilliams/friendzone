@@ -109,7 +109,7 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  width: 411px;
+  /*width: 411px;*/
 }
 
 .personal-stats-container {
@@ -131,7 +131,7 @@ body {
   margin: 5px 10px;
   display: flex;
   flex-direction: column;
-  min-width: 60px;
+  /*min-width: 60px;*/
 }
 
 .stat-type {
@@ -317,6 +317,31 @@ body {
   height: 1px;
   margin-top: 10px;
   background: #b5b5d6;
+}
+
+.bar-chart-container {
+  /*min-width: 100px;*/
+  display: flex;
+  justify-content: space-between;
+}
+
+.bar-chart-bar {
+  position: relative;
+  width: 40px;
+  background: #406fff;
+  margin: 10px;
+}
+
+.bar-chart-name {
+  position: relative;
+  top: 4px;
+  font-size: 15px;
+}
+
+.bar-chart-wins {
+  position: relative;
+  left: 23px;
+  top: 5px;
 }
 
 .footer {

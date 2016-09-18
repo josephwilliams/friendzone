@@ -21,10 +21,15 @@ export default class Splash extends React.Component {
       wins: 0,
       losses: 0,
       bestStreak: 0,
+      gameHistory: {},
     };
   }
 
   componentDidMount () {
+    this.determinePlayerStats();
+  }
+
+  determinePlayerStats () {
     let that = this;
     let wins = 0;
     let losses = 0;
@@ -42,6 +47,14 @@ export default class Splash extends React.Component {
             let games = that.state.games;
             games.push(game);
 
+            // setting up this.state.gameHistory of { player: wins }
+            let gameHistory = that.state.gameHistory;
+            if (gameHistory[game.winner]) {
+              gameHistory[game.winner] += 1;
+            } else {
+              gameHistory[game.winner] = 1;
+            }
+
             if (currentKing === username) {
               wins += 1;
               losses -= 1;
@@ -50,7 +63,7 @@ export default class Splash extends React.Component {
                  bestStreak = currentStreak;
               }
             } else {
-              losses += 1
+              losses += 1;
               currentStreak = 0;
             }
 
@@ -72,9 +85,6 @@ export default class Splash extends React.Component {
         that.setState({ currentUser: undefined });
       }
     });
-  }
-
-  determinePlayerStats () {
   }
 
   forceUpdate () {
@@ -103,6 +113,7 @@ export default class Splash extends React.Component {
                            wins={this.state.wins}
                            losses={this.state.losses}
                            bestStreak={this.state.bestStreak}
+                           gameHistory={this.state.gameHistory}
             />
           </div>
           <NewGame currentUser={this.state.currentUser}

@@ -21522,7 +21522,8 @@
 	      currentKing: null,
 	      wins: 0,
 	      losses: 0,
-	      bestStreak: 0
+	      bestStreak: 0,
+	      gameHistory: {}
 	    };
 	    return _this;
 	  }
@@ -21530,6 +21531,11 @@
 	  _createClass(Splash, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      this.determinePlayerStats();
+	    }
+	  }, {
+	    key: 'determinePlayerStats',
+	    value: function determinePlayerStats() {
 	      var that = this;
 	      var wins = 0;
 	      var losses = 0;
@@ -21547,6 +21553,14 @@
 	                var game = key;
 	                var games = that.state.games;
 	                games.push(game);
+	
+	                // setting up this.state.gameHistory of { player: wins }
+	                var gameHistory = that.state.gameHistory;
+	                if (gameHistory[game.winner]) {
+	                  gameHistory[game.winner] += 1;
+	                } else {
+	                  gameHistory[game.winner] = 1;
+	                }
 	
 	                if (currentKing === username) {
 	                  wins += 1;
@@ -21581,9 +21595,6 @@
 	      });
 	    }
 	  }, {
-	    key: 'determinePlayerStats',
-	    value: function determinePlayerStats() {}
-	  }, {
 	    key: 'forceUpdate',
 	    value: function forceUpdate() {
 	      this.setState({ games: [] });
@@ -21614,7 +21625,8 @@
 	              currentKing: this.state.currentKing,
 	              wins: this.state.wins,
 	              losses: this.state.losses,
-	              bestStreak: this.state.bestStreak
+	              bestStreak: this.state.bestStreak,
+	              gameHistory: this.state.gameHistory
 	            })
 	          ),
 	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
@@ -39838,6 +39850,10 @@
 	
 	var _piechart2 = _interopRequireDefault(_piechart);
 	
+	var _barchart = __webpack_require__(195);
+	
+	var _barchart2 = _interopRequireDefault(_barchart);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39938,7 +39954,7 @@
 	            { className: 'personal-stats-container' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'stat-holder' },
+	              { className: 'stat-holder', style: { width: '60px' } },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'stat-type' },
@@ -39970,7 +39986,7 @@
 	            { className: 'personal-stats-container', style: { height: "118px", marginTop: "49px" } },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'stat-holder' },
+	              { className: 'stat-holder', style: { minWidth: '68px' } },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'stat-type' },
@@ -39981,6 +39997,19 @@
 	              'div',
 	              { className: 'king-holder' },
 	              this.props.currentKing
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'personal-stats-container' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-holder' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-value' },
+	                _react2.default.createElement(_barchart2.default, { games: this.props.gameHistory })
+	              )
 	            )
 	          )
 	        );
@@ -40102,7 +40131,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var percentage = this.props.percentage.toString().slice(2, 4);
-	      console.log(percentage.length);
 	      if (percentage.length < 2) {
 	        percentage = percentage.concat('0');
 	      }
@@ -40124,6 +40152,107 @@
 	}(_react2.default.Component);
 	
 	exports.default = PieChart;
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _lodash = __webpack_require__(176);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BarChart = function (_React$Component) {
+	  _inherits(BarChart, _React$Component);
+	
+	  function BarChart() {
+	    _classCallCheck(this, BarChart);
+	
+	    return _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).call(this));
+	  }
+	
+	  _createClass(BarChart, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'sortPlayersByScore',
+	    value: function sortPlayersByScore(players) {
+	      console.log(players);
+	    }
+	  }, {
+	    key: 'renderGraph',
+	    value: function renderGraph() {
+	      var games = this.props.games;
+	      console.log("this.props.games", this.props.games);
+	      var highScore = 0;
+	      var topPlayer = void 0;
+	      var gameHistory = [];
+	      _lodash2.default.forOwn(games, function (winCount, player) {
+	        if (winCount > highScore) {
+	          highScore = winCount;
+	          topPlayer = player;
+	        }
+	
+	        gameHistory.push([player, winCount]);
+	      });
+	
+	      return gameHistory.map(function (game, gameIdx) {
+	        var player = game[0];
+	        var barHeight = game[1];
+	        return _react2.default.createElement(
+	          'div',
+	          { key: gameIdx },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'bar-chart-wins' },
+	            barHeight
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'bar-chart-bar', style: { height: barHeight } },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'bar-chart-name' },
+	              player
+	            )
+	          )
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'bar-chart-container' },
+	        this.renderGraph()
+	      );
+	    }
+	  }]);
+	
+	  return BarChart;
+	}(_react2.default.Component);
+	
+	exports.default = BarChart;
 
 /***/ }
 /******/ ]);

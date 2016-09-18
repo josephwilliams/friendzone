@@ -1,5 +1,6 @@
 import React from 'react';
 import PieChart from './piechart';
+import BarChart from './barchart';
 
 export default class Stats extends React.Component {
   constructor (props) {
@@ -56,7 +57,7 @@ export default class Stats extends React.Component {
             </div>
           </div>
           <div className="personal-stats-container">
-            <div className="stat-holder">
+            <div className="stat-holder" style={{ width: '60px' }}>
               <div className="stat-type">win %</div>
               <div className="stat-value">
                 <PieChart percentage={percentageProps} />
@@ -68,7 +69,7 @@ export default class Stats extends React.Component {
             </div>
           </div>
           <div className="personal-stats-container" style={{ height: "118px", marginTop: "49px" }}>
-            <div className="stat-holder">
+            <div className="stat-holder" style={{ minWidth: '68px' }}>
               <div className="stat-type">
                 current king
               </div>
@@ -77,6 +78,15 @@ export default class Stats extends React.Component {
               {this.props.currentKing}
             </div>
           </div>
+
+          <div className="personal-stats-container">
+            <div className="stat-holder">
+              <div className="stat-value">
+                <BarChart games={this.props.gameHistory} />
+              </div>
+            </div>
+          </div>
+          
         </div>
       );
     } else {

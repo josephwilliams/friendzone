@@ -71,7 +71,6 @@ export default class PieChart extends React.Component {
 
   render () {
     let percentage = this.props.percentage.toString().slice(2,4);
-    console.log(percentage.length);
     if (percentage.length < 2) {
       percentage = percentage.concat('0');
     }
