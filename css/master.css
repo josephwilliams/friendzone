@@ -63,6 +63,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   background: #e2fff7;
   min-height: 120px;
   padding: 30px;
@@ -118,6 +119,16 @@ body {
   border: 2px solid #60d9ff;
 }
 
+.stats-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #e2fff7;
+  min-height: 120px;
+  padding: 30px;
+}
+
 .personal-stats-wrapper {
   display: flex;
   align-items: flex-end;
@@ -127,7 +138,8 @@ body {
 
 .personal-stats-container {
   border-radius: 10px;
-  background: rgba(154, 126, 255, 0.1);
+  /*background: rgba(154, 126, 255, 0.1);*/
+  background: #e2fff7;
   padding: 10px;
   margin: 2px;
   cursor: default;

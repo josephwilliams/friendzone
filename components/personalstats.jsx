@@ -39,7 +39,24 @@ export default class Stats extends React.Component {
   }
 
   render () {
-    if (this.props.currentUser) {
+    if(this.props.winsLosses && this.props.currentUser){
+      let num1 = (Math.round(this.props.wins * 10.0) / 10);
+      let num2 = (Math.round(this.props.losses * 10.0) / 10);
+      return (
+        <div className="personal-stats-wrapper">
+          <div className="personal-stats-container">
+            <div className="stat-holder">
+              <div className="stat-type">wins</div>
+              <div className="stat-value">{this.props.wins}</div>
+            </div>
+            <div className="stat-holder">
+              <div className="stat-type">losses</div>
+              <div className="stat-value">{this.props.losses}</div>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (this.props.currentUser) {
       let num1 = (Math.round(this.props.wins * 10.0) / 10);
       let num2 = (Math.round(this.props.losses * 10.0) / 10);
       let winPercentage = (num1 / num2).toString().slice(2,4);

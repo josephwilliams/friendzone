@@ -24,6 +24,7 @@ export default class Splash extends React.Component {
       losses: 0,
       bestStreak: 0,
       gameHistory: {},
+      navigateToStats: false
     };
   }
 
@@ -117,28 +118,52 @@ export default class Splash extends React.Component {
     });
   }
 
+  toggleStatsPageNav(){
+    console.log('state before: ', this.state.navigateToStats)
+    let temp = this.state.navigateToStats;
+    this.setState({navigateToStats: !temp});
+    console.log('state after: ', this.state.navigateToStats)
+  }
+
   render () {
     // organize into how many each player has won from each category
 
-    if (this.state.currentUser) {
+    if(this.state.navigateToStats){
+      return (
+        <div>
+          <div className="splash-container">
+            <Header />
+            <div className="stats-page-container">
+              <button className="sign-out-button" onClick={this.toggleStatsPageNav.bind(this)}>Return to main page</button>
+                <PersonalStats currentUser={this.state.currentUser}
+                               currentKing={this.state.currentKing}
+                               wins={this.state.wins}
+                               losses={this.state.losses}
+                               bestStreak={this.state.bestStreak}
+                               gameHistory={this.state.gameHistory}
+                />
+              <Chart games={this.state.games} container={'chart'}></Chart>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (this.state.currentUser) {
       return (
         <div className="splash-container">
           <Header />
           <div className="personal-container">
-            <Auth />
-            <PersonalStats currentUser={this.state.currentUser}
-                           currentKing={this.state.currentKing}
-                           wins={this.state.wins}
+            <PersonalStats wins={this.state.wins}
                            losses={this.state.losses}
-                           bestStreak={this.state.bestStreak}
-                           gameHistory={this.state.gameHistory}
+                           winsLosses={true}
+                           currentUser={this.state.currentUser}
             />
+            <Auth />
+            <button className="sign-out-button" onClick={this.toggleStatsPageNav.bind(this)}>View Stats</button>
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>
           <Results currentUser={this.state.currentUser}
                    games={this.state.games} />
-          <Chart games={this.state.games} container={'chart'}></Chart>
         </div>
       );
     } else {

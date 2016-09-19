@@ -21528,7 +21528,8 @@
 	      wins: 0,
 	      losses: 0,
 	      bestStreak: 0,
-	      gameHistory: {}
+	      gameHistory: {},
+	      navigateToStats: false
 	    };
 	    return _this;
 	  }
@@ -21629,11 +21630,46 @@
 	      });
 	    }
 	  }, {
+	    key: 'toggleStatsPageNav',
+	    value: function toggleStatsPageNav() {
+	      console.log('state before: ', this.state.navigateToStats);
+	      var temp = this.state.navigateToStats;
+	      this.setState({ navigateToStats: !temp });
+	      console.log('state after: ', this.state.navigateToStats);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      // organize into how many each player has won from each category
 	
-	      if (this.state.currentUser) {
+	      if (this.state.navigateToStats) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'splash-container' },
+	            _react2.default.createElement(_header2.default, null),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stats-page-container' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'sign-out-button', onClick: this.toggleStatsPageNav.bind(this) },
+	                'Return to main page'
+	              ),
+	              _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser,
+	                currentKing: this.state.currentKing,
+	                wins: this.state.wins,
+	                losses: this.state.losses,
+	                bestStreak: this.state.bestStreak,
+	                gameHistory: this.state.gameHistory
+	              }),
+	              _react2.default.createElement(_highcharts2.default, { games: this.state.games, container: 'chart' })
+	            )
+	          )
+	        );
+	      } else if (this.state.currentUser) {
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'splash-container' },
@@ -21641,20 +21677,22 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'personal-container' },
-	            _react2.default.createElement(_auth2.default, null),
-	            _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser,
-	              currentKing: this.state.currentKing,
-	              wins: this.state.wins,
+	            _react2.default.createElement(_personalstats2.default, { wins: this.state.wins,
 	              losses: this.state.losses,
-	              bestStreak: this.state.bestStreak,
-	              gameHistory: this.state.gameHistory
-	            })
+	              winsLosses: true,
+	              currentUser: this.state.currentUser
+	            }),
+	            _react2.default.createElement(_auth2.default, null),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'sign-out-button', onClick: this.toggleStatsPageNav.bind(this) },
+	              'View Stats'
+	            )
 	          ),
 	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
 	            forceUpdate: this.forceUpdate.bind(this) }),
 	          _react2.default.createElement(_results2.default, { currentUser: this.state.currentUser,
-	            games: this.state.games }),
-	          _react2.default.createElement(_highcharts2.default, { games: this.state.games, container: 'chart' })
+	            games: this.state.games })
 	        );
 	      } else {
 	        return _react2.default.createElement(
@@ -39927,11 +39965,50 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.props.currentUser) {
+	      if (this.props.winsLosses && this.props.currentUser) {
 	        var num1 = Math.round(this.props.wins * 10.0) / 10;
 	        var num2 = Math.round(this.props.losses * 10.0) / 10;
-	        var winPercentage = (num1 / num2).toString().slice(2, 4);
-	        var percentageProps = num1 / num2;
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'personal-stats-wrapper' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'personal-stats-container' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-holder' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-type' },
+	                'wins'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-value' },
+	                this.props.wins
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'stat-holder' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-type' },
+	                'losses'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-value' },
+	                this.props.losses
+	              )
+	            )
+	          )
+	        );
+	      } else if (this.props.currentUser) {
+	        var _num = Math.round(this.props.wins * 10.0) / 10;
+	        var _num2 = Math.round(this.props.losses * 10.0) / 10;
+	        var winPercentage = (_num / _num2).toString().slice(2, 4);
+	        var percentageProps = _num / _num2;
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'personal-stats-wrapper' },
@@ -40328,6 +40405,8 @@
 	  fourPlayer: 0
 	};
 	
+	var chartOptions = void 0;
+	
 	// module.exports = React.createClass({
 	
 	var Charts = function (_React$Component) {
@@ -40345,52 +40424,18 @@
 	  _createClass(Charts, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      // Extend Highcharts with modules
 	      if (this.props.modules) {
 	        this.props.modules.forEach(function (module) {
 	          module(_highcharts2.default);
 	        });
 	      }
-	      // Set container which the chart should render to.
-	    }
-	  }, {
-	    key: 'displayGames',
-	    value: function displayGames() {
-	      if (this.props.games && this.props.games.length > 0) {
 	
-	        var chartOptions = {
-	          chart: {
-	            renderTo: 'container',
-	            type: 'bar'
-	          },
-	          title: {
-	            text: 'Victories'
-	          },
-	          xAxis: {
-	            categories: ['2 Player', '3 Player', '4 Player']
-	          },
-	          yAxis: {
-	            title: {
-	              text: 'Games won'
-	            }
-	          },
-	          series: [{
-	            name: 'Brian',
-	            data: [brianWins.twoPlayer, brianWins.threePlayer, brianWins.fourPlayer]
-	          }, {
-	            name: 'David',
-	            data: [daveWins.twoPlayer, daveWins.threePlayer, daveWins.fourPlayer]
-	          }, {
-	            name: 'Karl',
-	            data: [karlWins.twoPlayer, karlWins.threePlayer, karlWins.fourPlayer]
-	          }, {
-	            name: 'Joe',
-	            data: [joeWins.twoPlayer, joeWins.threePlayer, joeWins.fourPlayer]
-	          }]
-	        };
+	      var theThing = this.props.games.slice(0);
 	
-	        var theThing = this.props.games.slice(0);
-	
+	      var scoreCountPromise = new Promise(function (resolve, reject) {
 	        theThing.forEach(function (game) {
 	          if (game.winner === "Joseph") {
 	            if (game.playerCount === 2) {
@@ -40427,9 +40472,52 @@
 	          }
 	        });
 	
-	        this.chart = new _highcharts2.default[this.props.type || "Chart"](this.props.container, chartOptions);
+	        var chartOptions = {
+	          chart: {
+	            renderTo: 'container',
+	            type: 'bar'
+	          },
+	          title: {
+	            text: 'Victories'
+	          },
+	          xAxis: {
+	            categories: ['2 Player', '3 Player', '4 Player']
+	          },
+	          yAxis: {
+	            title: {
+	              text: 'Games won'
+	            }
+	          },
+	          series: [{
+	            name: 'Brian',
+	            data: [brianWins.twoPlayer, brianWins.threePlayer, brianWins.fourPlayer]
+	          }, {
+	            name: 'David',
+	            data: [daveWins.twoPlayer, daveWins.threePlayer, daveWins.fourPlayer]
+	          }, {
+	            name: 'Karl',
+	            data: [karlWins.twoPlayer, karlWins.threePlayer, karlWins.fourPlayer]
+	          }, {
+	            name: 'Joe',
+	            data: [joeWins.twoPlayer, joeWins.threePlayer, joeWins.fourPlayer]
+	          }]
+	        };
+	        resolve(chartOptions);
+	      });
 	
-	        return _react2.default.createElement('div', { id: 'chart' });
+	      scoreCountPromise.then(function (options) {
+	        _this2.chart = new _highcharts2.default[_this2.props.type || "Chart"](_this2.props.container, options);
+	      }).catch(console.log);
+	    }
+	  }, {
+	    key: 'displayChart',
+	    value: function displayChart() {
+	      if (this.props.games && this.props.games.length > 0) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('div', { id: 'chart' })
+	        );
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
@@ -40453,7 +40541,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'highcharts' },
-	        this.displayGames()
+	        this.displayChart()
 	      );
 	    }
 	  }]);
