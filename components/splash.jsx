@@ -87,7 +87,6 @@ export default class Splash extends React.Component {
         that.setState({ currentUser: undefined });
       }
     });
-<<<<<<< HEAD
 
     firebase.database().ref('/games').once('value').then(function(snapshot) {
       const games = snapshot.val();
@@ -100,8 +99,6 @@ export default class Splash extends React.Component {
         that.setState({ games: games });
       });
     });
-=======
->>>>>>> origin/master
   }
 
   forceUpdate () {

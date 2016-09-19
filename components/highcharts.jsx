@@ -32,10 +32,6 @@ export default class Charts extends React.Component {
       super();
     }
 
-    componentWillMount(){
-
-    }
-
     // When the DOM is ready, create the chart.
     componentDidMount() {
         // Extend Highcharts with modules
