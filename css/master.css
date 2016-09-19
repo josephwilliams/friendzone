@@ -140,6 +140,7 @@ body {
 
 .stat-value {
   font-size: 18px;
+  position: relative;
 }
 
 .new-game-container {

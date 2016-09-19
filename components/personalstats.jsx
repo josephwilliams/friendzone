@@ -80,7 +80,7 @@ export default class Stats extends React.Component {
           </div>
           <div className="personal-stats-container">
             <div className="stat-holder">
-              <div className="stat-value">
+              <div className="stat-value" style={{ top: '-3px' }}>
                 <BarChart games={this.props.gameHistory} />
               </div>
             </div>
