@@ -5,11 +5,13 @@ import NewGame from './newgame';
 import Results from './results';
 import Footer from './footer';
 import PersonalStats from './personalstats';
+import Chart from './highcharts';
 
 //Firebase
 var firebase = require('firebase/app');
 require('firebase/auth');
 require('firebase/database');
+let theGames = [];
 
 export default class Splash extends React.Component {
   constructor () {
@@ -35,7 +37,9 @@ export default class Splash extends React.Component {
       _.forOwn(games, (key, value) => {
         let game = key;
         let games = that.state.games;
+        theGames = that.state.games;
         games.push(game);
+        theGames.push(game);
         that.setState({ games: games });
       });
     });
@@ -49,13 +53,17 @@ export default class Splash extends React.Component {
       _.forOwn(games, (key, value) => {
         let game = key;
         let games = that.state.games;
+        theGames = that.state.games;
         games.push(game);
+        theGames.push(game);
         that.setState({ games: games });
       });
     });
   }
 
   render () {
+    // organize into how many each player has won from each category
+
     if (this.state.currentUser) {
       return (
         <div className="splash-container">
@@ -68,6 +76,7 @@ export default class Splash extends React.Component {
                    forceUpdate={this.forceUpdate.bind((this))}/>
           <Results currentUser={this.state.currentUser}
                    games={this.state.games} />
+          <Chart games={this.state.games} container={'chart'}></Chart>
         </div>
       );
     } else {

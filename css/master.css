@@ -7,6 +7,19 @@ body {
 .splash-container {
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: '#e2fff7';
+}
+
+.loading {
+  display: flex;
+  width: 100px;
+  background: '#e2fff7';
+}
+
 .header {
   display: flex;
   flex-direction: column;
