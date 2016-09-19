@@ -21487,11 +21487,11 @@
 	
 	var _results2 = _interopRequireDefault(_results);
 	
-	var _footer = __webpack_require__(192);
+	var _footer = __webpack_require__(188);
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
-	var _personalstats = __webpack_require__(193);
+	var _personalstats = __webpack_require__(189);
 	
 	var _personalstats2 = _interopRequireDefault(_personalstats);
 	
@@ -39664,7 +39664,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Rebase = __webpack_require__(188);
+	var Rebase = __webpack_require__(195);
 	var base = Rebase.createClass({
 	  apiKey: "AIzaSyDxo2dWYnQZhpxaPFfiRUPTIji0Q75AUr4",
 	  authDomain: "friendzone-a9494.firebaseapp.com",
@@ -39729,17 +39729,154 @@
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(189);
+	"use strict";
 	
-
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Footer = function Footer() {
+	  return _react2.default.createElement("div", { className: "footer" });
+	};
+	
+	exports.default = Footer;
 
 /***/ },
 /* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Stats = function (_React$Component) {
+	  _inherits(Stats, _React$Component);
+	
+	  function Stats(props) {
+	    _classCallCheck(this, Stats);
+	
+	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this, props));
+	
+	    _this.state = {
+	      wins: 0,
+	      losses: 0
+	    };
+	
+	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
+	    return _this;
+	  }
+	
+	  _createClass(Stats, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.determineCounts();
+	    }
+	  }, {
+	    key: 'determineCounts',
+	    value: function determineCounts() {
+	      var uid = this.props.user.uid;
+	      var _2 = 0;
+	      var wins = _2.wins;
+	      var losses = _2.losses;
+	
+	      var that = this;
+	      firebase.database().ref('/users/' + uid + "/games").once('value').then(function (snapshot) {
+	        var games = snapshot.val();
+	        _.forOwn(games, function (key, value) {
+	          var game = key;
+	          game.winner === that.username ? wins += 1 : losses += 1;
+	        });
+	      });
+	
+	      this.setState({
+	        wins: wins, losses: losses
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'personal-stats-container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'wins'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.wins
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'stat-holder' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-type' },
+	            'losses'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stat-value' },
+	            this.state.losses
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Stats;
+	}(_react2.default.Component);
+	
+	exports.default = Stats;
+
+/***/ },
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(196);
+	
+
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
-			module.exports = factory(__webpack_require__(190));
+			module.exports = factory(__webpack_require__(197));
 		else if(typeof define === 'function' && define.amd)
 			define(["firebase"], factory);
 		else {
@@ -40369,7 +40506,7 @@
 	;
 
 /***/ },
-/* 190 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40379,12 +40516,12 @@
 	 *
 	 *   firebase = require('firebase');
 	 */
-	__webpack_require__(191);
+	__webpack_require__(198);
 	module.exports = firebase;
 
 
 /***/ },
-/* 191 */
+/* 198 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.3.2
@@ -40969,138 +41106,6 @@
 	(function(){function a(a){return new Y(a)}var b={TaskState:va,TaskEvent:ua,StringFormat:Ua,Storage:Y,Reference:X};if(window.firebase&&firebase.INTERNAL&&firebase.INTERNAL.registerService)firebase.INTERNAL.registerService("storage",a,b);else throw Error("Cannot install Firebase Storage - be sure to load firebase-app.js first.");})();})();
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Footer = function Footer() {
-	  return _react2.default.createElement("div", { className: "footer" });
-	};
-	
-	exports.default = Footer;
-
-/***/ },
-/* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Stats = function (_React$Component) {
-	  _inherits(Stats, _React$Component);
-	
-	  function Stats(props) {
-	    _classCallCheck(this, Stats);
-	
-	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this, props));
-	
-	    _this.state = {
-	      wins: 0,
-	      losses: 0
-	    };
-	
-	    _this.username = _this.props.currentUser.displayName.split(' ')[0];
-	    return _this;
-	  }
-	
-	  _createClass(Stats, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // this.determineCounts();
-	    }
-	  }, {
-	    key: 'determineCounts',
-	    value: function determineCounts() {
-	      var uid = this.props.user.uid;
-	      var _2 = 0;
-	      var wins = _2.wins;
-	      var losses = _2.losses;
-	
-	      var that = this;
-	      firebase.database().ref('/users/' + uid + "/games").once('value').then(function (snapshot) {
-	        var games = snapshot.val();
-	        _.forOwn(games, function (key, value) {
-	          var game = key;
-	          game.winner === that.username ? wins += 1 : losses += 1;
-	        });
-	      });
-	
-	      this.setState({
-	        wins: wins, losses: losses
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'personal-stats-container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'stat-holder' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'stat-type' },
-	            'wins'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'stat-value' },
-	            this.state.wins
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'stat-holder' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'stat-type' },
-	            'losses'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'stat-value' },
-	            this.state.losses
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Stats;
-	}(_react2.default.Component);
-	
-	exports.default = Stats;
 
 /***/ }
 /******/ ]);
