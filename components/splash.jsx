@@ -18,19 +18,76 @@ export default class Splash extends React.Component {
     super();
     this.state = {
       currentUser: undefined,
-      games: []
+      games: [],
+      currentKing: null,
+      wins: 0,
+      losses: 0,
+      bestStreak: 0,
+      gameHistory: {},
     };
   }
 
   componentDidMount () {
+    this.determinePlayerStats();
+  }
+
+  determinePlayerStats () {
     let that = this;
+    let wins = 0;
+    let losses = 0;
+    let currentKing = null;
+    let currentStreak = 0;
+    let bestStreak = 0;
+
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        that.setState({ currentUser: user });
+        const username = user.displayName.split(' ')[0];
+        firebase.database().ref('/games').once('value').then(function(snapshot) {
+          const games = snapshot.val();
+          _.forOwn(games, (key, value) => {
+            let game = key;
+            let games = that.state.games;
+            games.push(game);
+
+            // setting up this.state.gameHistory of { player: wins }
+            let gameHistory = that.state.gameHistory;
+            if (gameHistory[game.winner]) {
+              gameHistory[game.winner] += 1;
+            } else {
+              gameHistory[game.winner] = 1;
+            }
+
+            if (currentKing === username) {
+              wins += 1;
+              losses -= 1;
+              currentStreak += 1;
+              if (currentStreak > bestStreak) {
+                 bestStreak = currentStreak;
+              }
+            } else {
+              losses += 1;
+              currentStreak = 0;
+            }
+
+            currentKing = game.winner;
+            that.setState({
+              games: games,
+            });
+          });
+        }).then(() => {
+          that.setState({
+            currentUser: user,
+            currentKing: currentKing,
+            wins: wins,
+            losses: losses,
+            bestStreak: bestStreak,
+          });
+        });
       } else {
         that.setState({ currentUser: undefined });
       }
     });
+<<<<<<< HEAD
 
     firebase.database().ref('/games').once('value').then(function(snapshot) {
       const games = snapshot.val();
@@ -43,6 +100,8 @@ export default class Splash extends React.Component {
         that.setState({ games: games });
       });
     });
+=======
+>>>>>>> origin/master
   }
 
   forceUpdate () {
@@ -70,7 +129,13 @@ export default class Splash extends React.Component {
           <Header />
           <div className="personal-container">
             <Auth />
-            <PersonalStats currentUser={this.state.currentUser} />
+            <PersonalStats currentUser={this.state.currentUser}
+                           currentKing={this.state.currentKing}
+                           wins={this.state.wins}
+                           losses={this.state.losses}
+                           bestStreak={this.state.bestStreak}
+                           gameHistory={this.state.gameHistory}
+            />
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>
