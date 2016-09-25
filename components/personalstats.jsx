@@ -17,6 +17,7 @@ export default class Stats extends React.Component {
   componentDidMount () {
     // this.determineCounts();
     // push ;)
+    // push again ;)
   }
 
   determineCounts () {
