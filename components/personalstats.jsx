@@ -66,12 +66,6 @@ export default class Stats extends React.Component {
       return (
         <div className="personal-stats-wrapper">
           <div className="stats-page-container">
-            <div className="stat-holder" style={{ width: '60px' }}>
-              <div className="stat-type">win %</div>
-              <div className="stat-value">
-                <PieChart percentage={percentageProps} />
-              </div>
-            </div>
             <div className="stat-holder">
               <div className="stat-type">best streak</div>
               <div className="stat-value">{this.props.bestStreak}</div>

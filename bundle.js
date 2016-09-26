@@ -21680,7 +21680,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'view-stats-button', onClick: this.toggleStatsPageNav.bind(this) },
-	                'Close Stat View'
+	                'Close Stats'
 	              )
 	            )
 	          ),
@@ -40068,20 +40068,6 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'stats-page-container' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'stat-holder', style: { width: '60px' } },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-type' },
-	                'win %'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-value' },
-	                _react2.default.createElement(_piechart2.default, { percentage: percentageProps })
-	              )
-	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'stat-holder' },

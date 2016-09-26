@@ -147,7 +147,7 @@ export default class Splash extends React.Component {
                   <Piechart percentage={this.state.wins/this.state.losses} />
                 </div>
               </div>
-              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>Close Stat View</div>
+              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>Close Stats</div>
             </div>
           </div>
           <div className="stats-page-container">
