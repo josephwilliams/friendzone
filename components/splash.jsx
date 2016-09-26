@@ -120,10 +120,8 @@ export default class Splash extends React.Component {
   }
 
   toggleStatsPageNav(){
-    console.log('state before: ', this.state.navigateToStats)
     let temp = this.state.navigateToStats;
     this.setState({navigateToStats: !temp});
-    console.log('state after: ', this.state.navigateToStats)
   }
 
   render () {

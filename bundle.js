@@ -21636,10 +21636,8 @@
 	  }, {
 	    key: 'toggleStatsPageNav',
 	    value: function toggleStatsPageNav() {
-	      console.log('state before: ', this.state.navigateToStats);
 	      var temp = this.state.navigateToStats;
 	      this.setState({ navigateToStats: !temp });
-	      console.log('state after: ', this.state.navigateToStats);
 	    }
 	  }, {
 	    key: 'render',
