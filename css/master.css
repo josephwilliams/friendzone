@@ -104,6 +104,18 @@ body {
   border: 2px solid #60d9ff;
 }
 
+.view-stats-button {
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  color: #6161a8;
+  padding: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+
 .sign-out-button {
   border-radius: 10px;
   border: 2px solid #bdbdff;
@@ -112,6 +124,13 @@ body {
   cursor: pointer;
   font-size: 13px;
   transition: all 0.3s ease-in-out;
+}
+
+.right-of-auth {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 2px;
 }
 
 .sign-out-button:hover {
@@ -124,9 +143,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #e2fff7;
+  background: #BFE2DE;
   min-height: 120px;
-  padding: 30px;
+  padding: 10px;
 }
 
 .personal-stats-wrapper {
@@ -139,7 +158,7 @@ body {
 .personal-stats-container {
   border-radius: 10px;
   /*background: rgba(154, 126, 255, 0.1);*/
-  background: #e2fff7;
+  /*background: #e2fff7;*/
   padding: 10px;
   margin: 2px;
   cursor: default;

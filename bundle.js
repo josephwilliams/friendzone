@@ -21499,6 +21499,10 @@
 	
 	var _highcharts2 = _interopRequireDefault(_highcharts);
 	
+	var _piechart = __webpack_require__(190);
+	
+	var _piechart2 = _interopRequireDefault(_piechart);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21645,29 +21649,58 @@
 	      if (this.state.navigateToStats) {
 	        return _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'splash-container' },
+	          _react2.default.createElement(_header2.default, null),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'splash-container' },
-	            _react2.default.createElement(_header2.default, null),
+	            { className: 'personal-container' },
+	            _react2.default.createElement(_personalstats2.default, { wins: this.state.wins,
+	              losses: this.state.losses,
+	              winsLosses: true,
+	              currentUser: this.state.currentUser
+	            }),
+	            _react2.default.createElement(_auth2.default, null),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'stats-page-container' },
+	              { className: 'right-of-auth' },
 	              _react2.default.createElement(
-	                'button',
-	                { className: 'sign-out-button', onClick: this.toggleStatsPageNav.bind(this) },
-	                'Return to main page'
+	                'div',
+	                { className: 'stat-holder', style: { width: '60px' } },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'stat-type' },
+	                  'win %'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'stat-value' },
+	                  _react2.default.createElement(_piechart2.default, { percentage: this.state.wins / this.state.losses })
+	                )
 	              ),
-	              _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser,
-	                currentKing: this.state.currentKing,
-	                wins: this.state.wins,
-	                losses: this.state.losses,
-	                bestStreak: this.state.bestStreak,
-	                gameHistory: this.state.gameHistory
-	              }),
-	              _react2.default.createElement(_highcharts2.default, { games: this.state.games, container: 'chart' })
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'view-stats-button', onClick: this.toggleStatsPageNav.bind(this) },
+	                'Close Stat View'
+	              )
 	            )
-	          )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'stats-page-container' },
+	            _react2.default.createElement(_personalstats2.default, { currentUser: this.state.currentUser,
+	              currentKing: this.state.currentKing,
+	              wins: this.state.wins,
+	              losses: this.state.losses,
+	              bestStreak: this.state.bestStreak,
+	              gameHistory: this.state.gameHistory,
+	              winsLosses: false
+	            }),
+	            _react2.default.createElement(_highcharts2.default, { games: this.state.games, container: 'chart' })
+	          ),
+	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
+	            forceUpdate: this.forceUpdate.bind(this) }),
+	          _react2.default.createElement(_results2.default, { currentUser: this.state.currentUser,
+	            games: this.state.games })
 	        );
 	      } else if (this.state.currentUser) {
 	        return _react2.default.createElement(
@@ -21684,9 +21717,27 @@
 	            }),
 	            _react2.default.createElement(_auth2.default, null),
 	            _react2.default.createElement(
-	              'button',
-	              { className: 'sign-out-button', onClick: this.toggleStatsPageNav.bind(this) },
-	              'View Stats'
+	              'div',
+	              { className: 'right-of-auth' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'stat-holder', style: { width: '60px' } },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'stat-type' },
+	                  'win %'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'stat-value' },
+	                  _react2.default.createElement(_piechart2.default, { percentage: this.state.wins / this.state.losses })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'view-stats-button', onClick: this.toggleStatsPageNav.bind(this) },
+	                'View Stats'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(_newgame2.default, { currentUser: this.state.currentUser,
@@ -40014,39 +40065,7 @@
 	          { className: 'personal-stats-wrapper' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'personal-stats-container' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'stat-holder' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-type' },
-	                'wins'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-value' },
-	                this.props.wins
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'stat-holder' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-type' },
-	                'losses'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'stat-value' },
-	                this.props.losses
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'personal-stats-container' },
+	            { className: 'stats-page-container' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'stat-holder', style: { width: '60px' } },

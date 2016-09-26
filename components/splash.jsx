@@ -6,6 +6,7 @@ import Results from './results';
 import Footer from './footer';
 import PersonalStats from './personalstats';
 import Chart from './highcharts';
+import Piechart from './piechart';
 
 //Firebase
 var firebase = require('firebase/app');
@@ -130,21 +131,40 @@ export default class Splash extends React.Component {
 
     if(this.state.navigateToStats){
       return (
-        <div>
-          <div className="splash-container">
-            <Header />
-            <div className="stats-page-container">
-              <button className="sign-out-button" onClick={this.toggleStatsPageNav.bind(this)}>Return to main page</button>
-                <PersonalStats currentUser={this.state.currentUser}
-                               currentKing={this.state.currentKing}
-                               wins={this.state.wins}
-                               losses={this.state.losses}
-                               bestStreak={this.state.bestStreak}
-                               gameHistory={this.state.gameHistory}
-                />
-              <Chart games={this.state.games} container={'chart'}></Chart>
+        <div className="splash-container">
+          <Header />
+          <div className="personal-container">
+            <PersonalStats wins={this.state.wins}
+                           losses={this.state.losses}
+                           winsLosses={true}
+                           currentUser={this.state.currentUser}
+            />
+            <Auth />
+            <div className="right-of-auth">
+              <div className="stat-holder" style={{ width: '60px' }}>
+                <div className="stat-type">win %</div>
+                <div className="stat-value">
+                  <Piechart percentage={this.state.wins/this.state.losses} />
+                </div>
+              </div>
+              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>Close Stat View</div>
             </div>
           </div>
+          <div className="stats-page-container">
+              <PersonalStats currentUser={this.state.currentUser}
+                             currentKing={this.state.currentKing}
+                             wins={this.state.wins}
+                             losses={this.state.losses}
+                             bestStreak={this.state.bestStreak}
+                             gameHistory={this.state.gameHistory}
+                             winsLosses={false}
+              />
+            <Chart games={this.state.games} container={'chart'}></Chart>
+          </div>
+          <NewGame currentUser={this.state.currentUser}
+                   forceUpdate={this.forceUpdate.bind((this))}/>
+          <Results currentUser={this.state.currentUser}
+                   games={this.state.games} />
         </div>
       );
     } else if (this.state.currentUser) {
@@ -158,7 +178,15 @@ export default class Splash extends React.Component {
                            currentUser={this.state.currentUser}
             />
             <Auth />
-            <button className="sign-out-button" onClick={this.toggleStatsPageNav.bind(this)}>View Stats</button>
+            <div className="right-of-auth">
+              <div className="stat-holder" style={{ width: '60px' }}>
+                <div className="stat-type">win %</div>
+                <div className="stat-value">
+                  <Piechart percentage={this.state.wins/this.state.losses} />
+                </div>
+              </div>
+              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>View Stats</div>
+            </div>
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>

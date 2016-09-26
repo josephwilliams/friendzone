@@ -63,17 +63,7 @@ export default class Stats extends React.Component {
       let percentageProps = (num1 / num2)
       return (
         <div className="personal-stats-wrapper">
-          <div className="personal-stats-container">
-            <div className="stat-holder">
-              <div className="stat-type">wins</div>
-              <div className="stat-value">{this.props.wins}</div>
-            </div>
-            <div className="stat-holder">
-              <div className="stat-type">losses</div>
-              <div className="stat-value">{this.props.losses}</div>
-            </div>
-          </div>
-          <div className="personal-stats-container">
+          <div className="stats-page-container">
             <div className="stat-holder" style={{ width: '60px' }}>
               <div className="stat-type">win %</div>
               <div className="stat-value">
