@@ -5,11 +5,14 @@ import NewGame from './newgame';
 import Results from './results';
 import Footer from './footer';
 import PersonalStats from './personalstats';
+import Chart from './highcharts';
+import Piechart from './piechart';
 
 //Firebase
 var firebase = require('firebase/app');
 require('firebase/auth');
 require('firebase/database');
+let theGames = [];
 
 export default class Splash extends React.Component {
   constructor () {
@@ -22,6 +25,7 @@ export default class Splash extends React.Component {
       losses: 0,
       bestStreak: 0,
       gameHistory: {},
+      navigateToStats: false
     };
   }
 
@@ -85,6 +89,18 @@ export default class Splash extends React.Component {
         that.setState({ currentUser: undefined });
       }
     });
+
+    firebase.database().ref('/games').once('value').then(function(snapshot) {
+      const games = snapshot.val();
+      _.forOwn(games, (key, value) => {
+        let game = key;
+        let games = that.state.games;
+        theGames = that.state.games;
+        games.push(game);
+        theGames.push(game);
+        that.setState({ games: games });
+      });
+    });
   }
 
   forceUpdate () {
@@ -95,26 +111,80 @@ export default class Splash extends React.Component {
       _.forOwn(games, (key, value) => {
         let game = key;
         let games = that.state.games;
+        theGames = that.state.games;
         games.push(game);
+        theGames.push(game);
         that.setState({ games: games });
       });
     });
   }
 
+  toggleStatsPageNav(){
+    let temp = this.state.navigateToStats;
+    this.setState({navigateToStats: !temp});
+  }
+
   render () {
-    if (this.state.currentUser) {
+    // organize into how many each player has won from each category
+
+    if(this.state.navigateToStats){
       return (
         <div className="splash-container">
           <Header />
           <div className="personal-container">
-            <Auth />
-            <PersonalStats currentUser={this.state.currentUser}
-                           currentKing={this.state.currentKing}
-                           wins={this.state.wins}
+            <PersonalStats wins={this.state.wins}
                            losses={this.state.losses}
-                           bestStreak={this.state.bestStreak}
-                           gameHistory={this.state.gameHistory}
+                           winsLosses={true}
+                           currentUser={this.state.currentUser}
             />
+            <Auth />
+            <div className="right-of-auth">
+              <div className="stat-holder" style={{ width: '60px' }}>
+                <div className="stat-type">win %</div>
+                <div className="stat-value">
+                  <Piechart percentage={this.state.wins/this.state.losses} />
+                </div>
+              </div>
+              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>Close Stats</div>
+            </div>
+          </div>
+          <div className="stats-page-container">
+              <PersonalStats currentUser={this.state.currentUser}
+                             currentKing={this.state.currentKing}
+                             wins={this.state.wins}
+                             losses={this.state.losses}
+                             bestStreak={this.state.bestStreak}
+                             gameHistory={this.state.gameHistory}
+                             winsLosses={false}
+              />
+            <Chart games={this.state.games} container={'chart'}></Chart>
+          </div>
+          <NewGame currentUser={this.state.currentUser}
+                   forceUpdate={this.forceUpdate.bind((this))}/>
+          <Results currentUser={this.state.currentUser}
+                   games={this.state.games} />
+        </div>
+      );
+    } else if (this.state.currentUser) {
+      return (
+        <div className="splash-container">
+          <Header />
+          <div className="personal-container">
+            <PersonalStats wins={this.state.wins}
+                           losses={this.state.losses}
+                           winsLosses={true}
+                           currentUser={this.state.currentUser}
+            />
+            <Auth />
+            <div className="right-of-auth">
+              <div className="stat-holder" style={{ width: '60px' }}>
+                <div className="stat-type">win %</div>
+                <div className="stat-value">
+                  <Piechart percentage={this.state.wins/this.state.losses} />
+                </div>
+              </div>
+              <div className="view-stats-button" onClick={this.toggleStatsPageNav.bind(this)}>View Stats</div>
+            </div>
           </div>
           <NewGame currentUser={this.state.currentUser}
                    forceUpdate={this.forceUpdate.bind((this))}/>

@@ -7,6 +7,19 @@ body {
 .splash-container {
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: '#e2fff7';
+}
+
+.loading {
+  display: flex;
+  width: 100px;
+  background: '#e2fff7';
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -50,6 +63,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   background: #e2fff7;
   min-height: 120px;
   padding: 30px;
@@ -90,6 +104,19 @@ body {
   border: 2px solid #60d9ff;
 }
 
+.view-stats-button {
+  border-radius: 10px;
+  border: 2px solid #bdbdff;
+  color: #6161a8;
+  padding: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  margin: 5px 10px;
+}
+
 .sign-out-button {
   border-radius: 10px;
   border: 2px solid #bdbdff;
@@ -100,9 +127,26 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.right-of-auth {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 2px;
+}
+
 .sign-out-button:hover {
   transition: all 0.3s ease-in-out;
   border: 2px solid #60d9ff;
+}
+
+.stats-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #BFE2DE;
+  min-height: 120px;
+  padding: 10px;
 }
 
 .personal-stats-wrapper {
@@ -114,7 +158,8 @@ body {
 
 .personal-stats-container {
   border-radius: 10px;
-  background: rgba(154, 126, 255, 0.1);
+  /*background: rgba(154, 126, 255, 0.1);*/
+  /*background: #e2fff7;*/
   padding: 10px;
   margin: 2px;
   cursor: default;

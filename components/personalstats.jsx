@@ -41,11 +41,9 @@ export default class Stats extends React.Component {
   }
 
   render () {
-    if (this.props.currentUser) {
+    if(this.props.winsLosses && this.props.currentUser){
       let num1 = (Math.round(this.props.wins * 10.0) / 10);
       let num2 = (Math.round(this.props.losses * 10.0) / 10);
-      let winPercentage = (num1 / num2).toString().slice(2,4);
-      let percentageProps = (num1 / num2)
       return (
         <div className="personal-stats-wrapper">
           <div className="personal-stats-container">
@@ -58,13 +56,16 @@ export default class Stats extends React.Component {
               <div className="stat-value">{this.props.losses}</div>
             </div>
           </div>
-          <div className="personal-stats-container">
-            <div className="stat-holder" style={{ width: '60px' }}>
-              <div className="stat-type">win %</div>
-              <div className="stat-value">
-                <PieChart percentage={percentageProps} />
-              </div>
-            </div>
+        </div>
+      );
+    } else if (this.props.currentUser) {
+      let num1 = (Math.round(this.props.wins * 10.0) / 10);
+      let num2 = (Math.round(this.props.losses * 10.0) / 10);
+      let winPercentage = (num1 / num2).toString().slice(2,4);
+      let percentageProps = (num1 / num2)
+      return (
+        <div className="personal-stats-wrapper">
+          <div className="stats-page-container">
             <div className="stat-holder">
               <div className="stat-type">best streak</div>
               <div className="stat-value">{this.props.bestStreak}</div>
