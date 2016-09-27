@@ -144,7 +144,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #BFE2DE;
+  /*background: #ffffff;*/
   min-height: 120px;
   padding: 10px;
 }
@@ -153,7 +153,16 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  /*width: 411px;*/
+}
+
+.personal-stats-wrapper-big {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: #e1fdf3;
+  width: 580px;
+  border-radius: 15px;
+  height: 138px;
 }
 
 .personal-stats-container {
@@ -176,7 +185,16 @@ body {
   margin: 5px 10px;
   display: flex;
   flex-direction: column;
-  /*min-width: 60px;*/
+}
+
+.stat-holder-lower {
+  border-radius: 10px;
+  border: 2px solid #bc98ff;
+  color: #6161a8;
+  padding: 10px;
+  margin: 5px 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .stat-type {
@@ -281,7 +299,7 @@ body {
   border-radius: 10px;
   border: 2px solid #bdbdff;
   background: rgb(217, 217, 255);
-  color: #406fff;
+  color: #516ec7;
   height: 44px;
   font-size: 25px;
   margin: 0px 10px;
@@ -374,13 +392,13 @@ body {
 .bar-chart-bar {
   position: relative;
   width: 40px;
-  background: #406fff;
+  background: #516ec7;
   margin: 10px;
 }
 
 .bar-chart-name {
   position: relative;
-  top: 4px;
+  top: 6px;
   font-size: 15px;
 }
 

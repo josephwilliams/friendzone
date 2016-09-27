@@ -64,15 +64,15 @@ export default class Stats extends React.Component {
       let winPercentage = (num1 / num2).toString().slice(2,4);
       let percentageProps = (num1 / num2)
       return (
-        <div className="personal-stats-wrapper">
+        <div className="personal-stats-wrapper-big">
           <div className="stats-page-container">
-            <div className="stat-holder">
+            <div className="stat-holder-lower">
               <div className="stat-type">best streak</div>
               <div className="stat-value">{this.props.bestStreak}</div>
             </div>
           </div>
           <div className="personal-stats-container" style={{ height: "118px", marginTop: "49px" }}>
-            <div className="stat-holder" style={{ minWidth: '68px' }}>
+            <div className="stat-holder-lower" style={{ minWidth: '68px' }}>
               <div className="stat-type">
                 current king
               </div>
@@ -82,7 +82,7 @@ export default class Stats extends React.Component {
             </div>
           </div>
           <div className="personal-stats-container">
-            <div className="stat-holder">
+            <div className="stat-holder-lower">
               <div className="stat-value" style={{ top: '-3px' }}>
                 <BarChart games={this.props.gameHistory} />
               </div>

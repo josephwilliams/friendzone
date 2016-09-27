@@ -43,7 +43,9 @@ export default class Charts extends React.Component {
             this.props.modules.forEach(function (module) {
                 module(Highcharts);
             });
-        }
+
+        this.destroyLogo();
+      }
 
 
 
@@ -150,10 +152,24 @@ export default class Charts extends React.Component {
         this.chart.destroy();
     }
 
+    destroyLogo() {
+      const textElements = document.getElementsByTagName('text');
+      const textElementsArr = Array.from(docTexts);
+      let textElement = null;
+      textElementsArr.forEach(text => {
+        if (text.innerHTML === 'Highcharts.com') {
+          textElement = text;
+        }
+      });
+
+      console.log('wtf', textElement);
+    }
+
     render() {
         return (
           <div className="highcharts">
             {this.displayChart()}
+            <div className="divider" style={{"margin":"20px"}}/>
           </div>
         )
     }
