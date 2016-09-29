@@ -21541,6 +21541,7 @@
 	  _createClass(Splash, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // did it?
 	      this.determinePlayerStats();
 	    }
 	  }, {

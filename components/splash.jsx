@@ -30,6 +30,7 @@ export default class Splash extends React.Component {
   }
 
   componentDidMount () {
+    // did it?
     this.determinePlayerStats();
   }
 
