@@ -21542,6 +21542,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // did it?
+	      // hmm
 	      this.determinePlayerStats();
 	    }
 	  }, {
